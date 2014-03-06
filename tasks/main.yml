@@ -1,0 +1,6 @@
+---
+- name: Ensure redis is installed.
+  yum: pkg=redis state=installed enablerepo=epel
+
+- name: Ensure redis is running.
+  service: name=redis state=started enabled=yes
