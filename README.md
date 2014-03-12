@@ -8,9 +8,7 @@ None.
 
 ## Role Variables
 
-Available variables are listed below, along with default values (see `vars/main.yml`):
-
-    TODO
+None.
 
 ## Dependencies
 
@@ -19,14 +17,8 @@ Available variables are listed below, along with default values (see `vars/main.
 ## Example Playbook
 
     - hosts: all
-      vars_files:
-        - vars/main.yml
       roles:
         - { role: geerlingguy.redis }
-
-*Inside `vars/main.yml`*:
-
-    TODO
 
 ## License
 
