@@ -2,5 +2,8 @@
 - hosts: localhost
   remote_user: root
 
+  vars:
+    redis_port: 6777
+
   roles:
     - ansible-role-redis
