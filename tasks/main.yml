@@ -13,7 +13,7 @@
 - name: Ensure Redis is configured.
   template:
     src: redis.conf.j2
-    dest: /etc/redis/redis.conf
+    dest: "{{ redis_conf_path }}"
     mode: 0644
   notify: restart redis
 
