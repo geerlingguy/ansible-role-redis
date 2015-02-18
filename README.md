@@ -1,10 +1,10 @@
 # Ansible Role: Redis
 
-Installs Redis on RHEL/CentOS 6.x.
+Installs [Redis](http://redis.io/) on RHEL/CentOS or Debian/Ubuntu.
 
 ## Requirements
 
-None.
+On RedHat-based distributions, requires the EPEL repository.
 
 ## Role Variables
 
@@ -12,7 +12,7 @@ None.
 
 ## Dependencies
 
-  - geerlingguy.repo-epel
+None.
 
 ## Example Playbook
 
