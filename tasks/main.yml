@@ -10,5 +10,12 @@
 - include: setup-Debian.yml
   when: ansible_os_family == 'Debian'
 
+- name: Ensure Redis is configured.
+  template:
+    src: redis.conf.j2
+    dest: /etc/redis/redis.conf
+    mode: 0644
+  notify: restart redis
+
 - name: Ensure redis is running and enabled on boot.
   service: "name={{ redis_daemon }} state=started enabled=yes"
