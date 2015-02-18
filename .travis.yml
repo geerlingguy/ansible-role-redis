@@ -30,8 +30,9 @@ script:
     || (echo 'Idempotence test: fail' && exit 1)
 
   # Make sure Redis is running.
+  - sudo redis-cli ping
   - redis-cli ping
 
 after_failure:
   - which redis-cli
-  - cat /var/log/redis/redis-server.log
+  - sudo cat /var/log/redis/redis-server.log
