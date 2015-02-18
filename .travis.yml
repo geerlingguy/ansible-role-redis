@@ -38,10 +38,6 @@ script:
   - sudo service redis-server stop
   - sudo service redis-server start
 
-  # Make sure Redis is running.
-  - redis-cli -p 6777 ping
-
 after_failure:
-  - which redis-cli
   - sudo cat /var/log/redis/redis-server.log
   - sudo cat /etc/redis/redis.conf
