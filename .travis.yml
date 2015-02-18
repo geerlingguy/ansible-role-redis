@@ -33,6 +33,10 @@ script:
     && (echo 'Idempotence test: pass' && exit 0)
     || (echo 'Idempotence test: fail' && exit 1)
 
+  - sudo service redis-server status
+  - sudo service redis-server stop
+  - sudo service redis-server start
+
   # Make sure Redis is running.
   - sudo redis-cli ping
   - redis-cli ping
@@ -40,3 +44,4 @@ script:
 after_failure:
   - which redis-cli
   - sudo cat /var/log/redis/redis-server.log
+  - sudo cat /etc/redis/redis.conf
