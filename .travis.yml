@@ -31,3 +31,7 @@ script:
 
   # Make sure Redis is running.
   - redis-cli ping
+
+after_failure:
+  - which redis-cli
+  - cat /var/log/redis/redis-server.log
