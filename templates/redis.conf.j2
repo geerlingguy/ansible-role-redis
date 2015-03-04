@@ -37,13 +37,6 @@ appendonly {{ redis_appendonly }}
 appendfsync {{ redis_appendfsync }}
 no-appendfsync-on-rewrite no
 
-vm-enabled {{ redis_vm_enabled }}
-vm-swap-file /var/lib/redis/redis.swap
-vm-max-memory 0
-vm-page-size 32
-vm-pages 134217728
-vm-max-threads 4
-
 hash-max-zipmap-entries 512
 hash-max-zipmap-value 64
 list-max-ziplist-entries 512

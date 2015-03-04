@@ -56,10 +56,6 @@ The appendonly option, if enabled, affords better data durability guarantees, at
 
 Valid values are `always` (slower, safest), `everysec` (happy medium), or `no` (let the filesystem flush data when it wants, most risky).
 
-    redis_vm_enabled: "no"
-
-Whether to enable the use of virtual memory/swapping.
-
     # Add extra include files for local configuration/overrides.
     redis_includes: []
 

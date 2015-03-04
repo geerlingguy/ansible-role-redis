@@ -22,7 +22,5 @@ redis_dbdir: /var/lib/redis
 redis_appendonly: "no"
 redis_appendfsync: "everysec"
 
-redis_vm_enabled: "no"
-
 # Add extra include files for local configuration/overrides.
 redis_includes: []
