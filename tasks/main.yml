@@ -19,3 +19,4 @@
 
 - name: Ensure redis is running and enabled on boot.
   service: "name={{ redis_daemon }} state=started enabled=yes"
+  sudo: true
