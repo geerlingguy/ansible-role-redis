@@ -48,6 +48,27 @@ Snapshotting configuration; setting values in this list will save the database t
 
 Database compression and location configuration.
 
+    redis_maxmemory: 0
+    
+Limit memory usage to the specified amount of bytes. When the memory limit is reached Redis will try to remove keys according to the eviction policy selected (see redis_maxmemory_policy).
+Leave at 0 for no limit.
+
+    redis_maxmemory_policy: "allkeys-lru"
+    
+How Redis will select what to remove when maxmemory is reached. You can select among five behaviors:
+
+- "volatile-lru" > remove the key with an expire set using an LRU algorithm
+- "allkeys-lru" > remove any key according to the LRU algorithm
+- "volatile-random" > remove a random key with an expire set
+- "allkeys-random" > remove a random key, any key
+- "volatile-ttl" > remove the key with the nearest expire time (minor TTL)
+- "noeviction" > don't expire at all, just return an error on write operations
+
+<!-- comment to allow code block after bullet list -->
+    redis_maxmemory_samples: "5"
+
+Number of samples to use to approximate LRU. The default of 5 produces good enough results. 10 Approximates true LRU very closely but costs a bit more CPU. 3 is very fast but not very accurate.
+
     redis_appendonly: "no"
 
 The appendonly option, if enabled, affords better data durability guarantees, at the cost of slightly slower performance.
