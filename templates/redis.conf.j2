@@ -30,9 +30,11 @@ dir {{ redis_dbdir }}
 
 # maxclients 128
 
+{% if redis_maxmemory %}
 maxmemory {{ redis_maxmemory }}
 maxmemory-policy {{ redis_maxmemory_policy }}
 maxmemory-samples {{ redis_maxmemory_samples }}
+{% endif %}
 
 appendonly {{ redis_appendonly }}
 appendfsync {{ redis_appendfsync }}

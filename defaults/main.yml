@@ -20,7 +20,7 @@ redis_dbfilename: dump.rdb
 redis_dbdir: /var/lib/redis
 
 redis_maxmemory: 0
-redis_maxmemory_policy: "allkeys-lru"
+redis_maxmemory_policy: "noeviction"
 redis_maxmemory_samples: 5
 
 redis_appendonly: "no"

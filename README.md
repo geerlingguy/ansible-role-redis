@@ -50,24 +50,15 @@ Database compression and location configuration.
 
     redis_maxmemory: 0
     
-Limit memory usage to the specified amount of bytes. When the memory limit is reached Redis will try to remove keys according to the eviction policy selected (see redis_maxmemory_policy).
-Leave at 0 for no limit.
+Limit memory usage to the specified amount of bytes. Leave at 0 for unlimited.
 
-    redis_maxmemory_policy: "allkeys-lru"
+    redis_maxmemory_policy: "noeviction"
     
-How Redis will select what to remove when maxmemory is reached. You can select among five behaviors:
+The method to use to keep memory usage below the limit, if specified. See [Using Redis as an LRU cache](http://redis.io/topics/lru-cache).
 
-- "volatile-lru" > remove the key with an expire set using an LRU algorithm
-- "allkeys-lru" > remove any key according to the LRU algorithm
-- "volatile-random" > remove a random key with an expire set
-- "allkeys-random" > remove a random key, any key
-- "volatile-ttl" > remove the key with the nearest expire time (minor TTL)
-- "noeviction" > don't expire at all, just return an error on write operations
+    redis_maxmemory_samples: 5
 
-<!-- comment to allow code block after bullet list -->
-    redis_maxmemory_samples: "5"
-
-Number of samples to use to approximate LRU. The default of 5 produces good enough results. 10 Approximates true LRU very closely but costs a bit more CPU. 3 is very fast but not very accurate.
+Number of samples to use to approximate LRU. See [Using Redis as an LRU cache](http://redis.io/topics/lru-cache).
 
     redis_appendonly: "no"
 
