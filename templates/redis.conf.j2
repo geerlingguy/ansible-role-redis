@@ -29,9 +29,12 @@ dbfilename {{ redis_dbfilename }}
 dir {{ redis_dbdir }}
 
 # maxclients 128
-# maxmemory <bytes>
-# maxmemory-policy volatile-lru
-# maxmemory-samples 3
+
+{% if redis_maxmemory %}
+maxmemory {{ redis_maxmemory }}
+maxmemory-policy {{ redis_maxmemory_policy }}
+maxmemory-samples {{ redis_maxmemory_samples }}
+{% endif %}
 
 appendonly {{ redis_appendonly }}
 appendfsync {{ redis_appendfsync }}

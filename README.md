@@ -48,6 +48,18 @@ Snapshotting configuration; setting values in this list will save the database t
 
 Database compression and location configuration.
 
+    redis_maxmemory: 0
+    
+Limit memory usage to the specified amount of bytes. Leave at 0 for unlimited.
+
+    redis_maxmemory_policy: "noeviction"
+    
+The method to use to keep memory usage below the limit, if specified. See [Using Redis as an LRU cache](http://redis.io/topics/lru-cache).
+
+    redis_maxmemory_samples: 5
+
+Number of samples to use to approximate LRU. See [Using Redis as an LRU cache](http://redis.io/topics/lru-cache).
+
     redis_appendonly: "no"
 
 The appendonly option, if enabled, affords better data durability guarantees, at the cost of slightly slower performance.
