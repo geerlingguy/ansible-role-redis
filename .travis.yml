@@ -1,4 +1,5 @@
 ---
+sudo: required
 language: python
 python: "2.7"
 
@@ -41,3 +42,6 @@ script:
 after_failure:
   - sudo cat /var/log/redis/redis-server.log
   - sudo cat /etc/redis/redis.conf
+
+notifications:
+  webhooks: https://galaxy.ansible.com/api/v1/notifications/
