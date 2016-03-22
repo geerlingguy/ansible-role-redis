@@ -73,11 +73,9 @@ Valid values are `always` (slower, safest), `everysec` (happy medium), or `no` (
 
 Add extra include file paths to this list to include more/localized Redis configuration.
 
-If you want to install redis with a different package name, you need to set
+The redis package name for installation via the system package manager. Defaults to `redis-server` on Debian and `redis` on RHEL.
 
-```
-redis_package_name: redis28u
-```
+    redis_package_name: "redis28u"
 
 ## Dependencies
 
