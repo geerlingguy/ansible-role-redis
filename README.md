@@ -104,7 +104,7 @@ Add extra include file paths to this list to include more/localized Redis config
 
     redis_extra_params: {}
 
-Add extra redis.conf parameters which don't have dedicated role variables. Example:
+Add extra redis.conf parameters which don't have dedicated role variables. Example usage:
 
     redis_extra_prams:
       repl-diskless-sync: "no"
@@ -112,6 +112,7 @@ Add extra redis.conf parameters which don't have dedicated role variables. Examp
       repl-ping-slave-period: 10
       repl-timeout: 60
 
+####Redis Sentinel related variables
 
     redis_sentinel_enabled: false
 
