@@ -43,3 +43,24 @@ redis_includes: []
 
 # Add extra params with non-determined names
 redis_extra_params: {}
+
+# Redis sentinel setup
+redis_sentinel_enabled: false
+redis_sentinel_dir: /tmp
+redis_sentinel_port: 26379
+redis_sentinel_logfile: /var/log/redis/sentinel.log
+
+redis_sentinel_monitors:
+  - name: mymaster
+    host: 127.0.0.1
+    port: 6379
+    quorum: 2
+    options: 
+      auth-pass: false
+      down-after-milliseconds: 30000
+      parallel-syncs: 1
+      failover-timeout: 180000
+      notification-script: false
+      client-reconfig-script: false
+
+redis_sentinel_extra_params: {}

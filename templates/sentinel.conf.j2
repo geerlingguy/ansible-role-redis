@@ -1,0 +1,23 @@
+#{{ ansible_managed }}
+
+port {{ redis_sentinel_port }}
+
+dir {{ redis_sentinel_dir }}
+
+{% for master in redis_sentinel_monitors -%}
+sentinel monitor {{ master.name }} {{ master.host }} {{ master.port }} {{ master.quorum|d('2') }}
+{% for option,value in master.options.iteritems() -%}
+{% if value -%}
+sentinel {{ option }} {{ master.name }} {{ value }}
+{% endif %}
+{% endfor -%}
+
+{% endfor -%}
+
+logfile {{ redis_sentinel_logfile }}
+
+{% if redis_sentinel_extra_params %}
+{% for redis_param,value in redis_sentinel_extra_params.iteritems() %}
+{{ redis_param }} {{ value }}
+{% endfor %}
+{% endif %}
