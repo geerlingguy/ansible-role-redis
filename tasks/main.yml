@@ -15,6 +15,7 @@
     src: redis.conf.j2
     dest: "{{ redis_conf_path }}"
     mode: 0644
+    owner: redis
   notify: restart redis
 
 - name: Set the kernel paramter for vm overcommit
