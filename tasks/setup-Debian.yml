@@ -14,3 +14,9 @@
 - name: Ensure redis is installed.
   apt: name=redis-server state=latest
 
+# sentinel init script is not shipped with Debian based distros, add it manually
+- name: Install sentinel init script
+  template:
+    src: redis-sentinel.j2
+    dest: /etc/init.d/redis-sentinel
+    mode: 0755
