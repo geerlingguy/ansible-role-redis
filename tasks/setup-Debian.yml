@@ -1,3 +1,16 @@
 ---
+- name: Add dotdeb key on Debian Wheezy
+  apt_key: url=http://www.dotdeb.org/dotdeb.gpg state=present
+  when: ansible_distribution_release == 'wheezy'
+
+- name: Add dotdeb repository on Debian Wheezy
+  apt_repository: repo='deb http://packages.dotdeb.org wheezy all' state=present
+  when: ansible_distribution_release == 'wheezy'
+
+- name: Add chris-lea/redis repository on Ubuntu Precise
+  apt_repository: repo='ppa:chris-lea/redis-server' state=present
+  when: ansible_distribution_release == 'precise'
+
 - name: Ensure redis is installed.
-  apt: name=redis-server state=installed
+  apt: name=redis-server state=latest
+
