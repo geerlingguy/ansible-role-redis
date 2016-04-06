@@ -55,7 +55,7 @@ redis_sentinel_monitors:
     host: 127.0.0.1
     port: 6379
     quorum: 2
-    options: 
+    options:
       auth-pass: false
       down-after-milliseconds: 30000
       parallel-syncs: 1
