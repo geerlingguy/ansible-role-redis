@@ -1,3 +1,7 @@
 ---
+- name: Install REMI repo on RHEL 6
+  yum: name=http://rpms.remirepo.net/enterprise/remi-release-6.rpm state=present
+  when: ansible_distribution_major_version|int == 6
+
 - name: Ensure redis is installed.
-  yum: name=redis state=installed enablerepo=epel
+  yum: name=redis state=latest enablerepo=epel,remi
