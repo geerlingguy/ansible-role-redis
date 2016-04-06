@@ -1,0 +1,48 @@
+#!/bin/bash
+#{{ ansible_managed }}
+### BEGIN INIT INFO
+# Provides:          redis sentinel
+# Required-Start:    $all
+# Required-Stop:    $all
+# Default-Start:    2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: Starts redis sentinel
+# Description:      Starts redis sentinel using start-stop-daemon
+### END INIT INFO
+
+NAME=redis-sentinel
+BIN=/usr/bin/redis-server
+SENTINEL_PID=/var/run/redis/sentinel.pid
+CMD=$1
+
+start() {
+        echo "Starting $NAME ..."
+        exec 2>&1 $BIN /etc/redis/sentinel.conf --sentinel | logger -t sentinel &
+        echo $! > "${SENTINEL_PID}";
+}
+
+stop() {
+        PID=`cat $SENTINEL_PID`
+        echo "Stopping $NAME ($PID) ..."
+        kill $PID
+}
+
+restart() {
+        echo "Restarting $NAME ..."
+        stop
+        start
+}
+
+case "$CMD" in
+        start)
+                start
+                ;;
+        stop)
+                stop
+                ;;
+        restart)
+                restart
+                ;;
+        *)
+                echo "Usage $0 {start|stop|restart}"
+esac

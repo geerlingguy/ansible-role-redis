@@ -1,0 +1,15 @@
+
+- name: Disable selinux
+  selinux: state=disabled
+  when: ansible_os_family == 'RedHat'
+
+- name: Ensure Redis Sentinel is configured.
+  template:
+    src: sentinel.conf.j2
+    dest: "{{ redis_sentinel_conf_path }}"
+    mode: 0644
+    owner: redis
+  notify: restart redis-sentinel
+
+- name: Ensure redis-sentinel is running and enabled on boot.
+  service: "name=redis-sentinel state=started enabled=yes"

@@ -1,3 +1,5 @@
+#{{ ansible_managed }}
+
 daemonize yes
 pidfile /var/run/redis/{{ redis_daemon }}.pid
 port {{ redis_port }}
@@ -36,6 +38,10 @@ maxmemory-policy {{ redis_maxmemory_policy }}
 maxmemory-samples {{ redis_maxmemory_samples }}
 {% endif %}
 
+{% if redis_requirepass %}
+requirepass {{ redis_requirepass }}
+{% endif %}
+
 appendonly {{ redis_appendonly }}
 appendfsync {{ redis_appendfsync }}
 no-appendfsync-on-rewrite no
@@ -43,3 +49,21 @@ no-appendfsync-on-rewrite no
 {% for include in redis_includes %}
 include {{ include }}
 {% endfor %}
+
+{% if redis_slave == 'yes' %}
+slaveof {{ redis_master_ip }} {{ redis_master_port }}
+
+{% if redis_masterauth %}
+masterauth {{ redis_masterauth }}
+{% endif %}
+
+slave-serve-stale-data {{ redis_slave_serve_stale_data }}
+slave-read-only {{ redis_slave_read_only }}
+{% endif %}
+
+{% if redis_extra_params %}
+{% for redis_param,value in redis_extra_prams.iteritems() %}
+{{ redis_param }} {{ value }}
+{% endfor %}
+{% endif %}
+

@@ -15,7 +15,14 @@
     src: redis.conf.j2
     dest: "{{ redis_conf_path }}"
     mode: 0644
+    owner: redis
   notify: restart redis
+
+- name: Set the kernel paramter for vm overcommit
+  sysctl: name=vm.overcommit_memory value={{ redis_sysctl_overcommit_memory }} state=present ignoreerrors=yes
 
 - name: Ensure redis is running and enabled on boot.
   service: "name={{ redis_daemon }} state=started enabled=yes"
+
+- include: sentinel.yml
+  when: redis_sentinel_enabled
