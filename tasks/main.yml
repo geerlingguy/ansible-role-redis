@@ -23,3 +23,6 @@
 
 - name: Ensure redis is running and enabled on boot.
   service: "name={{ redis_daemon }} state=started enabled=yes"
+
+- include: sentinel.yml
+  when: redis_sentinel_enabled
