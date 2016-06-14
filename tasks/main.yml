@@ -22,6 +22,9 @@
   file:
     path: '{{ redis_logfile|dirname }}'
     state: 'directory'
+    mode: 0755
+    owner: 'redis'
+    group: 'redis'
 
 - name: Ensure Redis is configured.
   template:
