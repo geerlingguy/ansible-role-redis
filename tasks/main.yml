@@ -10,6 +10,42 @@
 - include: setup-Debian.yml
   when: ansible_os_family == 'Debian'
 
+- name: "Manage vm.overcommit_memory ? ({{ redis_manage_vm_overcommit_memory }}"
+  sysctl:
+    name: 'vm.overcommit_memory'
+    value: 1
+    state: present
+    reload: yes
+  when: redis_manage_vm_overcommit_memory
+
+- name: "Manage vm.overcommit_memory ? ({{ redis_manage_vm_overcommit_memory }}"
+  sysctl:
+    name: 'vm.overcommit_memory'
+    value: 1
+    state: absent
+    reload: yes
+  when: not redis_manage_vm_overcommit_memory
+
+- name: "Inactivate Transparent Huge Pages ? ({{ redis_manage_transparent_hugepages }})"
+  lineinfile:
+    dest: "{{ rc_local_file }}"
+    line: "echo never > /sys/kernel/mm/transparent_hugepage/enabled 2>/dev/null"
+    state: present
+    insertbefore: "^ *exit"
+  notify: inactivate hugepages
+  when: redis_manage_transparent_hugepages
+
+- file:
+    path: "{{ rc_local_file }}"
+    mode: 0755
+  when: redis_manage_transparent_hugepages
+
+- lineinfile:
+    dest: "{{ rc_local_file }}"
+    line: "echo never > /sys/kernel/mm/transparent_hugepage/enabled 2>/dev/null"
+    state: absent
+  when: not redis_manage_transparent_hugepages
+
 - name: Creating DB directory
   file:
     path: '{{ redis_dbdir }}'

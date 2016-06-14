@@ -1,3 +1,4 @@
 ---
 redis_daemon: redis-server
 redis_conf_path: /etc/redis/redis.conf
+rc_local_file: /etc/rc.local
