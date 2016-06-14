@@ -10,6 +10,19 @@
 - include: setup-Debian.yml
   when: ansible_os_family == 'Debian'
 
+- name: Creating DB directory
+  file:
+    path: '{{ redis_dbdir }}'
+    state: 'directory'
+    mode: 0755
+    owner: 'redis'
+    group: 'redis'
+
+- name: Creating log directory
+  file:
+    path: '{{ redis_logfile|dirname }}'
+    state: 'directory'
+
 - name: Ensure Redis is configured.
   template:
     src: redis.conf.j2
