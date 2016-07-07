@@ -8,6 +8,11 @@
     redis_package_name: "{{ _redis_package_name }}"
   when: redis_package_name is not defined
 
+- name: Define redis repository name if the OS is RedHat
+  set_fact:
+    redis_package_enablerepo: "{{ _redis_package_enablerepo }}"
+  when: redis_package_enablerepo is not defined and ansible_os_family == 'RedHat'
+
 # Setup/install tasks.
 - include: setup-RedHat.yml
   when: ansible_os_family == 'RedHat'
