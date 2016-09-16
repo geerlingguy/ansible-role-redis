@@ -10,6 +10,10 @@ On RedHat-based distributions, requires the EPEL repository (you can simply add 
 
 ## Role Variables
 
+    redis_enablerepo: epel
+
+(Used only on RHEL/CentOS) The repository to use for Redis installation.
+
 Available variables are listed below, along with default values (see `defaults/main.yml`):
 
     redis_port: 6379
