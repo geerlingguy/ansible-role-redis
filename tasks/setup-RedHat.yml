@@ -1,3 +1,3 @@
 ---
 - name: Ensure redis is installed.
-  yum: name=redis state=installed enablerepo=epel
+  yum: name={{ redis_package_name }} state=installed enablerepo={{ redis_package_enablerepo }}

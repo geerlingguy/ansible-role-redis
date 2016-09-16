@@ -49,11 +49,11 @@ Snapshotting configuration; setting values in this list will save the database t
 Database compression and location configuration.
 
     redis_maxmemory: 0
-    
+
 Limit memory usage to the specified amount of bytes. Leave at 0 for unlimited.
 
     redis_maxmemory_policy: "noeviction"
-    
+
 The method to use to keep memory usage below the limit, if specified. See [Using Redis as an LRU cache](http://redis.io/topics/lru-cache).
 
     redis_maxmemory_samples: 5
@@ -72,6 +72,10 @@ Valid values are `always` (slower, safest), `everysec` (happy medium), or `no` (
     redis_includes: []
 
 Add extra include file paths to this list to include more/localized Redis configuration.
+
+The redis package name for installation via the system package manager. Defaults to `redis-server` on Debian and `redis` on RHEL.
+
+    redis_package_name: "redis28u"
 
 ## Dependencies
 

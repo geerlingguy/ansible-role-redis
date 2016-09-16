@@ -1,3 +1,5 @@
 ---
 redis_daemon: redis
 redis_conf_path: /etc/redis.conf
+_redis_package_name: redis
+_redis_package_enablerepo: epel
