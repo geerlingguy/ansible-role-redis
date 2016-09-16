@@ -5,9 +5,11 @@ env:
   - distro: centos7
     init: /usr/lib/systemd/systemd
     run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
+    redis_daemon: redis
   - distro: ubuntu1604
     init: /lib/systemd/systemd
     run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
+    redis_daemon: redis-server
 
 services:
   - docker
@@ -37,13 +39,12 @@ script:
     || (echo 'Idempotence test: fail' && exit 1)
 
   # Make sure Redis is running, and can be stopped and started cleanly.
-  - 'sudo docker exec --tty "$(cat ${container_id})" env TERM=xterm service redis-server status'
-  - 'sudo docker exec --tty "$(cat ${container_id})" env TERM=xterm service redis-server stop'
-  - 'sudo docker exec --tty "$(cat ${container_id})" env TERM=xterm service redis-server start'
+  - 'sudo docker exec --tty "$(cat ${container_id})" env TERM=xterm systemctl --no-pager status ${redis_daemon}'
+  - 'sudo docker exec --tty "$(cat ${container_id})" env TERM=xterm systemctl --no-pager stop ${redis_daemon}'
+  - 'sudo docker exec --tty "$(cat ${container_id})" env TERM=xterm systemctl --no-pager start ${redis_daemon}'
 
 after_failure:
   - 'sudo docker exec --tty "$(cat ${container_id})" env TERM=xterm cat /var/log/redis/redis-server.log'
-  - 'sudo docker exec --tty "$(cat ${container_id})" env TERM=xterm cat /etc/redis/redis.conf'
 
 after_success:
   # Clean up.
