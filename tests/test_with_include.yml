@@ -1,0 +1,17 @@
+---
+- hosts: all
+
+  pre_tasks:
+    - name: Update apt cache.
+      apt: update_cache=yes
+      when: ansible_os_family == 'Debian'
+
+    - name: Clear out repo for Fedora.
+      set_fact:
+        redis_enablerepo: ""
+      when: ansible_distribution == 'Fedora'
+
+  roles:
+    - { role: role_under_test,
+        redis_use_include: true }
+
