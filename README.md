@@ -14,6 +14,11 @@ On RedHat-based distributions, requires the EPEL repository (you can simply add 
 
 (Used only on RHEL/CentOS) The repository to use for Redis installation.
 
+    redis_use_include: false
+
+This places the configuration file into `/etc/redis/redis.conf.d/redis.conf` and includes it in the main config-file.
+This can be used e.g. when redis-sentinel modifies the original redis.conf.
+
 Available variables are listed below, along with default values (see `defaults/main.yml`):
 
     redis_port: 6379

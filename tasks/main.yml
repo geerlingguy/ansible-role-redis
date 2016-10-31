@@ -15,12 +15,36 @@
 - include: setup-Debian.yml
   when: ansible_os_family == 'Debian'
 
+- name: Ensure redis.conf.d exists
+  file:
+    name: /etc/redis/redis.conf.d
+    mode: 0755
+    state: directory
+  when: redis_use_include
+
+- name: Ensure Redis is configured in redis.conf.d
+  template:
+    src: redis.conf.j2
+    dest: /etc/redis/redis.conf.d/redis.conf
+    mode: 0644
+  notify: restart redis
+  when: redis_use_include
+
+- name: Ensure Redis is configured to read from redis.conf.d
+  lineinfile:
+    dest: "{{ redis_conf_path }}"
+    insertbefore: BOF
+    line: "include /etc/redis/redis.conf.d/redis.conf"
+  notify: restart redis
+  when: redis_use_include
+
 - name: Ensure Redis is configured.
   template:
     src: redis.conf.j2
     dest: "{{ redis_conf_path }}"
     mode: 0644
   notify: restart redis
+  when: not redis_use_include
 
 - name: Ensure Redis is running and enabled on boot.
   service: "name={{ redis_daemon }} state=started enabled=yes"
