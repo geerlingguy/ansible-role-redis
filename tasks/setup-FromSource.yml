@@ -1,0 +1,85 @@
+---
+- name: Ensure required packages are installed.
+  package: "name={{ item }} state=installed"
+  with_items:
+    - gcc
+    - wget
+  become: yes
+
+- name: Ensure tcl is installed.
+  package: "name=tcl state=installed"
+  when: ( redis_test_before_install == true )
+  become: yes
+
+- name: Download source tar ball.
+  get_url: 
+    url: "http://download.redis.io/releases/redis-{{ redis_source_release_version }}.tar.gz"
+    dest: "{{ workspace }}/redis-{{ redis_source_release_version }}.tar.gz" 
+
+- name: Expand redis source archive. 
+  unarchive:
+    src: "{{ workspace }}/redis-{{ redis_source_release_version }}.tar.gz"
+    dest: "{{ workspace }}"
+    copy: no
+
+- name: Build redis dependencies.
+  command: >
+    make hiredis lua jemalloc linenoise
+    chdir={{ workspace}}/redis-{{ redis_source_release_version }}/deps
+
+- name: Build redis.
+  command: >
+    make
+    chdir={{ workspace }}/redis-{{ redis_source_release_version}}
+  
+- name: Run tests.
+  command: >
+    make test
+    chdir={{ workspace }}/redis-{{ redis_source_release_version}}
+  when: redis_test_before_install == true
+  
+- name: Install redis.
+  command: >
+    make install
+    chdir={{ workspace }}/redis-{{ redis_source_release_version}}
+  become: yes
+
+- name: Update the redis config path and daemon name 
+  set_fact:
+    redis_conf_path: "/etc/redis/{{ redis_port }}.conf"
+    redis_daemon: redis-6379
+  when: redis_multiple_instances == true
+
+- name: Deploy Redis init script.
+  template:
+    src: redis.init.j2
+    dest: /etc/init.d/{{ redis_daemon }}
+    owner: root
+    group: root
+    mode: 0755
+  become: yes
+
+
+- name: Ensure redis config and log directories exist
+  file: 
+    path: "{{ item }}"
+    state: directory
+    owner: root
+    group: root 
+    mode: 0644 
+  with_items:
+    - /etc/redis
+    - /var/lib/redis
+    - /var/log/redis
+    - /var/run/redis
+  become: yes 
+
+- name: Copy default redis.conf 
+  copy:
+    remote_src: true
+    src: "{{ workspace }}/redis-{{ redis_source_release_version }}/redis.conf"
+    dest: /etc/redis/redis.conf.orig
+    owner: root
+    group: root 
+    mode: 0644
+  become: yes

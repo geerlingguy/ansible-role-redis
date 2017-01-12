@@ -77,6 +77,18 @@ Valid values are `always` (slower, safest), `everysec` (happy medium), or `no` (
 
 Add extra include file paths to this list to include more/localized Redis configuration.
 
+    redis_installation_from_source: false
+
+Valid values are true and false. true will build redis from Source 
+
+    redis_test_before_install: false 
+
+make test is disabled per default because it failes sometimes (redis seems to have some issues to stop the servers created for their tests) and takes 1-2 minutes to complete
+
+    redis_source_release_version: stable
+
+Valid values are "stable" and every version (e.g. 3.2.6) listed here: http://download.redis.io/releases/ 
+
 The redis package name for installation via the system package manager. Defaults to `redis-server` on Debian and `redis` on RHEL.
 
     redis_package_name: "redis28u"

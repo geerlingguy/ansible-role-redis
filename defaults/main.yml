@@ -31,3 +31,13 @@ redis_appendfsync: "everysec"
 
 # Add extra include files for local configuration/overrides.
 redis_includes: []
+
+# Install redis from source and run make test (requires tcl > 8.5).
+redis_installation_from_source: false
+# running the tests takes several minutes, so you might skip them 
+redis_test_before_install: false
+# Use stable to choose the latest stable release or specify a version (see: http://download.redis.io/releases/)
+redis_source_release_version: stable
+# set this to true if you run more than one instance on a single host 
+redis_multiple_instances: true
+
