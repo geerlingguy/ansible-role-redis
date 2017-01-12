@@ -1,4 +1,4 @@
 ---
 - name: restart redis
   service: "name={{ redis_daemon }} state=restarted"
-  becomde: yes
+  become: yes
