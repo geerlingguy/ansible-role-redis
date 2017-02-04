@@ -2,6 +2,10 @@
 # Used for RHEL/CentOS/Fedora only. Allows the use of different repos.
 redis_enablerepo: epel
 
+## set to false, if you don't want this role to manage redis configuration and enable service
+## for example, if set in another role/using supervisor...
+redis_configure: true
+
 redis_port: 6379
 redis_bind_interface: 127.0.0.1
 redis_unixsocket: ''

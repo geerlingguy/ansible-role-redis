@@ -21,6 +21,9 @@
     dest: "{{ redis_conf_path }}"
     mode: 0644
   notify: restart redis
+  when: redis_configure
 
 - name: Ensure Redis is running and enabled on boot.
   service: "name={{ redis_daemon }} state=started enabled=yes"
+  when: redis_configure
+
