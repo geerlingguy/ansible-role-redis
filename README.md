@@ -81,6 +81,10 @@ The redis package name for installation via the system package manager. Defaults
 
     redis_package_name: "redis28u"
 
+An optional password to enable password authentication to the redis server. https://redis.io/commands/auth
+
+    redis_password: "myAwesomeRedisPassword"
+
 ## Dependencies
 
 None.
