@@ -1,3 +1,6 @@
 ---
 - name: restart redis
   service: "name={{ redis_daemon }} state=restarted"
+
+- name: inactivate hugepages
+  command: /bin/echo never > /sys/kernel/mm/transparent_hugepage/enabled

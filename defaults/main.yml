@@ -31,3 +31,6 @@ redis_appendfsync: "everysec"
 
 # Add extra include files for local configuration/overrides.
 redis_includes: []
+
+redis_manage_vm_overcommit_memory: true
+redis_manage_transparent_hugepages: true

@@ -2,3 +2,4 @@
 __redis_package: redis
 redis_daemon: redis
 redis_conf_path: /etc/redis.conf
+rc_local_file: /etc/rc.d/rc.local
