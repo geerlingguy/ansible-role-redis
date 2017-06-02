@@ -37,7 +37,7 @@ redis_includes: []
 redis_requirepass: ""
 
 # Disable these commands. Recommanded if Redis server is publicly opened.
-redis_disabled_command: []
+redis_disabled_commands: []
 #  - FLUSHDB
 #  - FLUSHALL
 #  - KEYS
