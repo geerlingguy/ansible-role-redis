@@ -31,3 +31,24 @@ redis_appendfsync: "everysec"
 
 # Add extra include files for local configuration/overrides.
 redis_includes: []
+
+# If set, activate Redis authentication with this password
+# Prefer long passwords. They may be generated with: echo "mypassword" | sha256sum
+redis_requirepass: ""
+
+# Disable these commands. Recommanded if Redis server is publicly opened.
+redis_disabled_command: []
+#  - FLUSHDB
+#  - FLUSHALL
+#  - KEYS
+#  - PEXPIRE
+#  - DEL
+#  - CONFIG
+#  - SHUTDOWN
+#  - BGREWRITEAOF
+#  - BGSAVE
+#  - SAVE
+#  - SPOP
+#  - SREM
+#  - RENAME
+#  - DEBUG
