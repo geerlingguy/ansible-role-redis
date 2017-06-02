@@ -9,6 +9,10 @@ bind {{ redis_bind_interface }}
 unixsocket {{ redis_unixsocket }}
 {% endif %}
 
+{% if redis_password %}
+  requirepass {{redis_password}}
+{% endif %}
+
 timeout {{ redis_timeout }}
 
 loglevel {{ redis_loglevel }}

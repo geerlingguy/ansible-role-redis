@@ -100,6 +100,10 @@ For extra security, you can disable certain Redis commands (this is especially i
       - CONFIG
       - SHUTDOWN
 
+An optional password to enable password authentication to the redis server. https://redis.io/commands/auth
+
+    redis_password: "myAwesomeRedisPassword"
+
 ## Dependencies
 
 None.
