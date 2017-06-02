@@ -79,7 +79,26 @@ Add extra include file paths to this list to include more/localized Redis config
 
 The redis package name for installation via the system package manager. Defaults to `redis-server` on Debian and `redis` on RHEL.
 
-    redis_package_name: "redis28u"
+    redis_package_name: "redis-server"
+
+(Default for RHEL shown) The redis package name for installation via the system package manager. Defaults to `redis-server` on Debian and `redis` on RHEL.
+
+    redis_requirepass: ""
+
+Set a password to require authentication to Redis. You can generate a strong password using `echo "my_password_here" | sha256sum`.
+
+    redis_disabled_commands: []
+
+For extra security, you can disable certain Redis commands (this is especially important if Redis is publicly accessible). For example:
+
+    redis_disabled_commands:
+      - FLUSHDB
+      - FLUSHALL
+      - KEYS
+      - PEXPIRE
+      - DEL
+      - CONFIG
+      - SHUTDOWN
 
 ## Dependencies
 
