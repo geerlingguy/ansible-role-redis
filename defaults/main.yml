@@ -2,6 +2,9 @@
 # Used for RHEL/CentOS/Fedora only. Allows the use of different repos.
 redis_enablerepo: epel
 
+# Used for Ubuntu only. Allows the use of different PPAs.
+redis_enableppa: ''
+
 redis_port: 6379
 redis_bind_interface: 127.0.0.1
 redis_unixsocket: ''
