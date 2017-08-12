@@ -3,6 +3,7 @@
 - name: "Ensure {{ redis_enableppa }} is added."
   apt_repository:
     repo: "{{ redis_enableppa }}"
+    state: present
   when: redis_enableppa != ''
 
 - name: Ensure Redis is installed.
