@@ -1,4 +1,12 @@
 ---
+
+- name: "Ensure {{ redis_enableppa }} is added."
+  apt_repository:
+    repo: "{{ redis_enableppa }}"
+  when: redis_enableppa != ''
+
+redis_enableppa
+
 - name: Ensure Redis is installed.
   apt:
     name: "{{ redis_package }}"
