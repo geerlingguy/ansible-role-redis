@@ -35,6 +35,12 @@ redis_includes: []
 # Require authentication to Redis with a password.
 redis_requirepass: ""
 
+# Setup Redis slave. Rquires the master IP and port.
+redis_slaveof: ""
+
+# Add Redis master password on the slave if there is one.
+redis_masterauth: ""
+
 # Disable certain Redis commands for security reasons.
 redis_disabled_commands: []
 #  - FLUSHDB
