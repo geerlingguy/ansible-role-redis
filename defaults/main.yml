@@ -18,6 +18,13 @@ redis_save:
   - 300 10
   - 60 10000
 
+redis_conf_file: redis.conf
+
+#Service settings
+redis_svc_user: root
+redis_svc_group: root
+service_type: forking
+
 redis_rdbcompression: "yes"
 redis_dbfilename: dump.rdb
 redis_dbdir: /var/lib/redis
