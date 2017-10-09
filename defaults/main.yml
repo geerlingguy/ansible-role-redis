@@ -18,12 +18,10 @@ redis_save:
   - 300 10
   - 60 10000
 
-redis_conf_file: redis.conf
-
 #Service settings
 redis_daemon: redis
-redis_svc_user: root
-redis_svc_group: root
+redis_svc_user: redis
+redis_svc_group: redis
 service_type: forking
 
 redis_rdbcompression: "yes"

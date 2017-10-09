@@ -5,12 +5,12 @@
     state: present
     enablerepo: "{{ redis_enablerepo }}"
 
-- name: Overwrite service file
+- name: Add service file
   template:
     src: "{{ ansible_os_family }}/redis.service.j2"
     dest: "{{ redis_svc_path }}/{{ redis_svc_file }}"
-  register: redis_service_files
+  register: redis_service_file
 
 - name: Reload redis service
-  command: systemctl daemon-reload
-#  when: redis_service_files | changed
+  command: "{{ daemon_reload_cmd }}"
+  when: redis_service_file | changed
