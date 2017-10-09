@@ -1,4 +1,9 @@
 ---
 __redis_package: redis
-redis_daemon: redis
 redis_conf_path: /etc/{{ redis_conf_file }}
+__ruby_package: ruby
+
+#Service vars
+redis_svc_path: /usr/lib/systemd/system/
+redis_svc_file: "{{ redis_daemon }}.service"
+

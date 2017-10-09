@@ -3,8 +3,8 @@ Description=Redis persistent key-value database
 After=network.target
 
 [Service]
-ExecStart=/usr/bin/redis-server /{{ redis_conf_path }}/{{ redis_conf_file }}.conf 
-ExecStop=/usr/libexec/redis-shutdown
+ExecStart=/usr/bin/redis-server {{ redis_conf_path }}
+ExecStop=/usr/libexec/redis-shutdown {{ redis_daemon }}
 User={{ redis_svc_user }}
 Group={{ redis_svc_group }}
 RuntimeDirectory={{ redis_data_dir }}

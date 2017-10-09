@@ -21,6 +21,7 @@ redis_save:
 redis_conf_file: redis.conf
 
 #Service settings
+redis_daemon: redis
 redis_svc_user: root
 redis_svc_group: root
 service_type: forking
@@ -58,3 +59,7 @@ redis_disabled_commands: []
 #  - SREM
 #  - RENAME
 #  - DEBUG
+
+redis_cluster: False
+redis_slaveof: ''
+

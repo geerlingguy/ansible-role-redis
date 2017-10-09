@@ -8,6 +8,13 @@
     redis_package: "{{ __redis_package }}"
   when: redis_package is not defined
 
+- name: Define ruby_package.
+  set_fact:
+    ruby_package: "{{ __ruby_package }}"
+  when: ruby_package is not defined
+
+# Setup/install tasks.
+
 # Setup/install tasks.
 - include: setup-RedHat.yml
   when: ansible_os_family == 'RedHat'

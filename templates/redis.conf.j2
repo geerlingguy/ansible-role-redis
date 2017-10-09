@@ -53,3 +53,11 @@ requirepass {{ redis_requirepass }}
 {% for redis_disabled_command in redis_disabled_commands %}
 rename-command {{ redis_disabled_command }} ""
 {% endfor %}
+
+{% if redis_cluster %}
+cluster-enabled yes
+{% endif %}
+
+{% if redis_slaveof %}
+slaveof {{ redis_slaveof }}
+{% endif %}
