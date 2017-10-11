@@ -1,7 +1,6 @@
 ---
 __redis_package: redis
 redis_conf_path: /etc/{{ redis_daemon }}.conf
-__ruby_package: ruby
 
 #Service vars
 daemon_reload_cmd: systemctl daemon-reload
