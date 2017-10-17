@@ -77,12 +77,6 @@ Valid values are `always` (slower, safest), `everysec` (happy medium), or `no` (
 
 Add extra include file paths to this list to include more/localized Redis configuration.
 
-The redis package name for installation via the system package manager. Defaults to `redis-server` on Debian and `redis` on RHEL.
-
-    redis_package_name: "redis-server"
-
-(Default for RHEL shown) The redis package name for installation via the system package manager. Defaults to `redis-server` on Debian and `redis` on RHEL.
-
     redis_requirepass: ""
 
 Set a password to require authentication to Redis. You can generate a strong password using `echo "my_password_here" | sha256sum`.
@@ -99,6 +93,18 @@ For extra security, you can disable certain Redis commands (this is especially i
       - DEL
       - CONFIG
       - SHUTDOWN
+
+Redis systemd overrides below.  This allows for more flexibility in installing more than one instance, such as a master/slave configuration on a single server.
+
+    redis_daemon: "redis"
+
+The redis daemon name name used for creating the config file and mapping to the service.  Changing this for multiple instances will allow for different config files to be created, mapping to the systemd service file for management.
+
+    redis_svc_user: "redis"
+    redis_svc_group: "redis"
+
+The user and group that will own the service while it is running.
+
 
 ## Dependencies
 

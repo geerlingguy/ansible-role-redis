@@ -2,8 +2,9 @@
 - name: Ensure Redis is installed.
   package:
     name: "{{ redis_package }}"
-    state: present
+    state: "{{ redis_package_state }}"
     enablerepo: "{{ redis_enablerepo }}"
+  notify: restart redis
 
 - name: Add service file
   template:
@@ -11,6 +12,10 @@
     dest: "{{ redis_svc_path }}/{{ redis_svc_file }}"
   register: redis_service_file
 
+# Do this immediately, not via handler, to avoid any downstream conflicts
 - name: Reload redis service
-  command: "{{ daemon_reload_cmd }}"
+  systemd:
+    state: reloaded
+    daemon_reload: yes
+    name: "{{ redis_daemon }}"
   when: redis_service_file | changed
