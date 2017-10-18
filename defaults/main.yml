@@ -11,7 +11,8 @@ redis_unixsocket: ''
 redis_timeout: 300
 
 redis_loglevel: "notice"
-redis_logfile: /var/log/redis/redis-server.log
+redis_logfile: "{{ redis_log_dir }}/{{ redis_daemon }}.log"
+redis_log_dir: /var/log/redis
 
 redis_databases: 16
 
@@ -23,7 +24,8 @@ redis_save:
 
 redis_rdbcompression: "yes"
 redis_dbfilename: dump.rdb
-redis_dbdir: /var/lib/redis
+redis_dbdir: "{{ redis_data_dir }}"
+redis_data_dir: /var/lib/redis
 
 redis_maxmemory: 0
 redis_maxmemory_policy: "noeviction"

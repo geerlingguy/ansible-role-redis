@@ -18,6 +18,15 @@
 - include: setup-Archlinux.yml
   when: ansible_os_family == 'Archlinux'
 
+- name: Create default directories
+  file:
+    path: "{{ item }}"
+    owner: "{{ redis_svc_user }}"
+    group: "{{ redis_svc_group }}"
+    mode: 0750
+  with_items:
+    - {{ read_write_dirs }}
+
 - name: Ensure Redis is configured.
   template:
     src: redis.conf.j2
