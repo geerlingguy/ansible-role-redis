@@ -10,12 +10,35 @@
   template:
     src: "{{ ansible_os_family }}/redis.service.j2"
     dest: "{{ redis_svc_path }}/{{ redis_svc_file }}"
+    owner: "{{ redis_svc_user }}"
+    group: "{{ redis_svc_group }}"
+    mode: 0640
   register: redis_service_file
+
+# Setup/install tasks.
+- name: Create default directories
+  file:
+    path: "{{ item }}"
+    owner: "{{ redis_svc_user }}"
+    group: "{{ redis_svc_group }}"
+    state: directory
+    mode: 0750
+  with_items:
+    - "{{ read_write_dirs }}"
+
+- name: Ensure Redis is configured.
+  template:
+    src: redis.conf.j2
+    dest: "{{ redis_conf_path }}"
+    owner: "{{ redis_svc_user }}"
+    group: "{{ redis_svc_group }}"
+    mode: 0640
+  notify: restart redis
 
 # Do this immediately, not via handler, to avoid any downstream conflicts
 - name: Reload redis service
   systemd:
-    state: reloaded
+    state: stopped
     daemon_reload: yes
     name: "{{ redis_daemon }}"
   when: redis_service_file | changed

@@ -9,10 +9,11 @@ redis_port: 6379
 redis_bind_interface: 127.0.0.1
 redis_unixsocket: ''
 redis_timeout: 300
+redis_daemonize: True
+redis_pidfile: "/var/run/redis/{{ redis_daemon }}.pid"
 
 redis_loglevel: "notice"
-redis_logfile: "{{ redis_log_dir }}/{{ redis_daemon }}.log"
-redis_log_dir: /var/log/redis
+redis_logfile: "/var/log/redis/{{ redis_daemon }}.log"
 
 redis_databases: 16
 

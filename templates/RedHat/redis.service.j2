@@ -3,13 +3,13 @@ Description=Redis persistent key-value database
 After=network.target
 
 [Service]
-ExecStart=/usr/bin/redis-server {{ redis_conf_path }}
+Type=notify
+ExecStart=/usr/bin/redis-server {{ redis_conf_path }} --supervised systemd
 ExecStop=/usr/libexec/redis-shutdown {{ redis_daemon }}
 User={{ redis_svc_user }}
 Group={{ redis_svc_group }}
 RuntimeDirectory={{ redis_data_dir }}
 RuntimeDirectoryMode=0755
-Type=forking
 
 [Install]
 WantedBy=multi-user.target

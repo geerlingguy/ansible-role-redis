@@ -2,6 +2,6 @@
 read_write_dirs:
 # Handle config permissions as files, not directories
 #  - /etc/redis
-  - /var/log/{{ redis_daemon }}
-  - /var/run/{{ redis_daemon }}
+  - /var/run/redis
+  - "{{ redis_logfile | dirname }}"
   - "{{ redis_dbdir }}"

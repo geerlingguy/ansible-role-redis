@@ -8,7 +8,6 @@
     redis_package: "{{ __redis_package }}"
   when: redis_package is not defined
 
-# Setup/install tasks.
 - include: setup-RedHat.yml
   when: ansible_os_family == 'RedHat'
 
@@ -17,22 +16,6 @@
 
 - include: setup-Archlinux.yml
   when: ansible_os_family == 'Archlinux'
-
-- name: Create default directories
-  file:
-    path: "{{ item }}"
-    owner: "{{ redis_svc_user }}"
-    group: "{{ redis_svc_group }}"
-    mode: 0750
-  with_items:
-    - {{ read_write_dirs }}
-
-- name: Ensure Redis is configured.
-  template:
-    src: redis.conf.j2
-    dest: "{{ redis_conf_path }}"
-    mode: 0644
-  notify: restart redis
 
 - name: Ensure Redis is running and enabled on boot.
   service: "name={{ redis_daemon }} state=started enabled=yes"

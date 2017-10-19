@@ -1,7 +1,10 @@
 # {{ ansible_managed }}
 
+{% if redis_daemonize %}
 daemonize yes
-pidfile /var/run/redis/{{ redis_daemon }}.pid
+pidfile {{ redis_pidfile }}
+{% endif %}
+
 port {{ redis_port }}
 bind {{ redis_bind_interface }}
 
@@ -60,4 +63,7 @@ cluster-enabled yes
 
 {% if redis_slaveof %}
 slaveof {{ redis_slaveof }}
+{% if redis_requirepass %}
+masterauth {{ redis_requirepass }}
+{% endif %}
 {% endif %}

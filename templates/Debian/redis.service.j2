@@ -6,18 +6,17 @@ Documentation=http://redis.io/documentation, man:redis-server(1)
 [Service]
 Type=forking
 ExecStart=/usr/bin/redis-server /etc/redis/{{ redis_daemon }}.conf
-PIDFile=/var/run/{{ redis_daemon }}/{{ redis_daemon }}.pid
+PIDFile=/var/run/redis/{{ redis_daemon }}.pid
 TimeoutStopSec=0
 Restart=always
 User={{ redis_svc_user }}
 Group={{ redis_svc_group }}
-RunTimeDirectory=redis
 
-ExecStartPre=-/bin/run-parts --verbose /etc/redis/redis-server.pre-up.d
-ExecStartPost=-/bin/run-parts --verbose /etc/redis/redis-server.post-up.d
-ExecStop=-/bin/run-parts --verbose /etc/redis/redis-server.pre-down.d
+ExecStartPre=-/bin/run-parts --verbose /etc/redis/{{ redis_daemon }}.pre-up.d
+ExecStartPost=-/bin/run-parts --verbose /etc/redis/{{ redis_daemon }}.post-up.d
+ExecStop=-/bin/run-parts --verbose /etc/redis/{{ redis_daemon }}.pre-down.d
 ExecStop=/bin/kill -s TERM $MAINPID
-ExecStopPost=-/bin/run-parts --verbose /etc/redis/redis-server.post-down.d
+ExecStopPost=-/bin/run-parts --verbose /etc/redis/{{ redis_daemon }}.post-down.d
 
 UMask=007
 PrivateTmp=yes
@@ -26,8 +25,8 @@ PrivateDevices=yes
 ProtectHome=yes
 ReadOnlyDirectories=/
 ReadWriteDirectories=-{{ redis_dbdir }}
-ReadWriteDirectories=-/var/log/{{ redis_daemon }}
-ReadWriteDirectories=-/var/run/{{ redis_daemon }}
+ReadWriteDirectories=-{{ redis_logfile | dirname }}
+ReadWriteDirectories=-/var/run/redis
 CapabilityBoundingSet=~CAP_SYS_PTRACE
 
 # redis-server writes its own config file when in cluster mode so we allow
@@ -37,4 +36,4 @@ ReadWriteDirectories=-/etc/redis
 
 [Install]
 WantedBy=multi-user.target
-Alias=redis.service
+Alias={{ redis_daemon }}.service
