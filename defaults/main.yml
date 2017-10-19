@@ -25,7 +25,7 @@ redis_save:
 
 redis_rdbcompression: "yes"
 redis_dbfilename: dump.rdb
-redis_dbdir: "/var/lib/redis"
+redis_dbdir: /var/lib/redis
 
 redis_maxmemory: 0
 redis_maxmemory_policy: "noeviction"
