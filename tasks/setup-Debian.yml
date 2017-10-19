@@ -36,7 +36,7 @@
 # Do this immediately, not via handler, to avoid any downstream conflicts
 - name: Reload redis service
   systemd:
-    state: stopped
+    state: started
     daemon_reload: yes
     name: "{{ redis_daemon }}"
   when: redis_service_file | changed

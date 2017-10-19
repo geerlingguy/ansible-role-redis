@@ -10,3 +10,8 @@ read_write_dirs:
   - "{{ redis_pidfile | dirname }}"
   - "{{ redis_logfile | dirname }}"
   - "{{ redis_dbdir }}"
+  - /etc/redis/{{ redis_daemon }}.pre-up.d
+  - /etc/redis/{{ redis_daemon }}.post-up.d
+  - /etc/redis/{{ redis_daemon }}.pre-down.d
+  - /etc/redis/{{ redis_daemon }}.post-down.d
+
