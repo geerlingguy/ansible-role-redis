@@ -13,6 +13,14 @@
     mode: 0640
   register: redis_service_file
 
+# Do this immediately, not via handler, to avoid any downstream conflicts
+- name: Reload redis service
+  systemd:
+    state: stopped
+    daemon_reload: yes
+    name: redis
+  when: redis_service_file | changed
+
 # Setup/install tasks.
 - name: Create default directories
   file:
@@ -32,12 +40,3 @@
     group: "{{ redis_svc_group }}"
     mode: 0640
   notify: restart redis
-
-# Do this immediately, not via handler, to avoid any downstream conflicts
-- name: Reload redis service
-  systemd:
-    state: started
-    daemon_reload: yes
-    name: "{{ redis_daemon }}"
-  when: redis_service_file | changed
-
