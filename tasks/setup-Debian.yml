@@ -10,16 +10,22 @@
     dest: "{{ redis_svc_path }}/{{ redis_svc_file }}"
     owner: "{{ redis_svc_user }}"
     group: "{{ redis_svc_group }}"
-    mode: 0640
+    mode: 0644
   register: redis_service_file
 
-# Do this immediately, not via handler, to avoid any downstream conflicts
+# Do this immediately, not via handler, to avoid any downstream conflicts and to remove temporarily the symlink to the redis server. This causes conflicts otherwise with services having the same name.
 - name: Reload redis service
   systemd:
     state: stopped
     daemon_reload: yes
-    name: redis
+    name: redis-server
+    enabled: no
   when: redis_service_file | changed
+
+- name: Remove default service file since names will conflict
+  file:
+    path: "{{ redis_svc_path }}/redis-server.service"
+    state: absent
 
 # Setup/install tasks.
 - name: Create default directories
@@ -28,7 +34,7 @@
     owner: "{{ redis_svc_user }}"
     group: "{{ redis_svc_group }}"
     state: directory
-    mode: 0750
+    mode: 0755
   with_items:
     - "{{ read_write_dirs }}"
 
@@ -38,5 +44,5 @@
     dest: "{{ redis_conf_path }}"
     owner: "{{ redis_svc_user }}"
     group: "{{ redis_svc_group }}"
-    mode: 0640
+    mode: 0644
   notify: restart redis
