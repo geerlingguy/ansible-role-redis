@@ -22,10 +22,13 @@
     enabled: no
   when: redis_service_file | changed
 
-- name: Remove default service file since names will conflict
+- name: Remove default files since names will conflict
   file:
-    path: "{{ redis_svc_path }}/redis-server.service"
+    path: "{{ item }}"
     state: absent
+  with_items:
+    - "{{ redis_svc_path }}/redis-server.service"
+    - "/etc/init.d/redis-server"
 
 # Setup/install tasks.
 - name: Create default directories
@@ -45,4 +48,13 @@
     owner: "{{ redis_svc_user }}"
     group: "{{ redis_svc_group }}"
     mode: 0644
+  notify: restart redis
+
+- name: Add init.d script
+  template:
+    src: Debian/initd.redis-server.j2
+    dest: "/etc/init.d/{{ redis_daemon }}"
+    owner: "{{ redis_svc_user }}"
+    group: "{{ redis_svc_group }}"
+    mode: 0755
   notify: restart redis

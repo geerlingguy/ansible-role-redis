@@ -7,7 +7,7 @@ env:
   # - distro: fedora24
   #   redis_daemon: redis
   - distro: ubuntu1604
-    redis_daemon: redis-server
+    redis_daemon: redis
 
 script:
   # Configure test script so we can run extra tests after playbook is run.
