@@ -1,0 +1,13 @@
+---
+- name: Set vm memory overcommit
+  sysctl:
+    name: vm.overcommit_memory
+    value: 1
+    state: present
+  when: vm_overcommit_mem
+
+- name: Disable transparent hugepages
+  copy:
+    src: transparent_hugepage
+    dest: /sys/kernel/mm/transparent_hugepage/enabled
+  when: disable_transparent_hugepage

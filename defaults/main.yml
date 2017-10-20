@@ -67,3 +67,6 @@ redis_daemon: redis
 redis_svc_user: redis
 redis_svc_group: redis
 
+# Best Practices - 
+vm_overcommit_mem: True
+disable_transparent_hugepage: True

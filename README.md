@@ -105,6 +105,17 @@ The redis daemon name name used for creating the config file and mapping to the 
 
 The user and group that will own the service while it is running.
 
+### Best Practices
+Some default configurable best practices per redis.io that can be found here [Redis Administration](https://redis.io/topics/admin)
+
+    vm_overcommit_mem: True
+
+The kernel will not overcommit memory which allows for more flexibility for memory but also increases risk of memory overload. Consider maxmemory settings and system swap as well.
+
+    disable_transparent_hugepage: True
+
+Transparent hugepages are often enabled by default.  Redis will warn of this if enabled.  Enabling them may cause delays allocating memory during runtime, so it is recommended to disable them by default.
+
 
 ## Dependencies
 
