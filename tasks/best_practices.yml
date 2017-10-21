@@ -7,7 +7,18 @@
   when: vm_overcommit_mem
 
 - name: Disable transparent hugepages
-  copy:
-    src: transparent_hugepage
-    dest: /sys/kernel/mm/transparent_hugepage/enabled
+  template:
+    src: transparent_hugepage/disable_initd.j2
+    dest: "/etc/init.d/{{ redis_daemon }}_disable_thp"
+    mode: 0755
+  register: disabled_thp
   when: disable_transparent_hugepage
+  #notify: reboot server
+
+- name: Enable service for transparent hugepages
+  systemd:
+    daemon_reload: yes
+    name: "{{ redis_daemon }}_disable_thp"
+    enabled: yes
+    state: started
+  when: disabled_thp is defined and disabled_thp | changed
