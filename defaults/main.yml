@@ -15,6 +15,9 @@ redis_pidfile: "/var/run/redis/{{ redis_daemon }}.pid"
 redis_loglevel: "notice"
 redis_logfile: "/var/log/redis/{{ redis_daemon }}.log"
 
+# This should match /proc/sys/net/core/somaxconn
+redis_tcp_backlog: 511
+
 redis_databases: 16
 
 # Set to an empty set to disable persistence (saving the DB to disk).
@@ -69,4 +72,5 @@ redis_svc_group: redis
 
 # Best Practices - 
 vm_overcommit_mem: True
+somaxconn_match: True
 disable_transparent_hugepage: True

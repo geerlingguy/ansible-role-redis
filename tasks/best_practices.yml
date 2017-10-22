@@ -6,6 +6,13 @@
     state: present
   when: vm_overcommit_mem
 
+- name: Set somaxconn to higher value
+  sysctl:
+    name: net.core.somaxconn
+    value: "{{ redis_tcp_backlog }}"
+    state: present
+  when: somaxconn_match
+
 - name: Disable transparent hugepages
   template:
     src: transparent_hugepage/disable_initd.j2

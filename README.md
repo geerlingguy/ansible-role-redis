@@ -34,6 +34,10 @@ Close a connection after a client is idle `N` seconds. Set to `0` to disable tim
 
 Log level and log location (valid levels are `debug`, `verbose`, `notice`, and `warning`).
 
+    redis_tcp_backlog: 511
+
+Increasing the tcp backlog allows for high-request environments to have a larger backlog for slow-request clients. The OS may truncate this to the default setting for somaxconn.  See "best practices" below for how this is being handled, if desired.
+
     redis_databases: 16
 
 The number of Redis databases.
@@ -111,6 +115,10 @@ Some default configurable best practices per redis.io that can be found here [Re
     vm_overcommit_mem: True
 
 The kernel will not overcommit memory which allows for more flexibility for memory but also increases risk of memory overload. Consider maxmemory settings and system swap as well.
+
+    somaxconn_match: True
+
+Match the value of the sysctl flag 'net.core.somaxconn' to the value of redis_tcp_backlog.  These should at least match or the system will truncate the value.
 
     disable_transparent_hugepage: True
 
