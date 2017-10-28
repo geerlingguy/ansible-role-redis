@@ -31,6 +31,7 @@
     group: "{{ redis_svc_group }}"
     state: directory
     mode: 0755
+    recurse: yes
   with_items:
     - "{{ read_write_dirs }}"
 
