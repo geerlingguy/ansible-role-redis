@@ -18,7 +18,7 @@
 # Do this immediately, not via handler, to avoid any downstream conflicts
 - name: Reload redis service
   systemd:
-    state: started
+    state: stopped
     daemon_reload: yes
     name: "{{ redis_daemon }}"
   when: redis_service_file | changed
@@ -42,4 +42,15 @@
     owner: "{{ redis_svc_user }}"
     group: "{{ redis_svc_group }}"
     mode: 0644
+  when: redis_type == "redis-server"
+  notify: restart redis
+
+- name: Ensure Redis Sentinel is configured.
+  template:
+    src: redis-sentinel.conf.j2
+    dest: "{{ redis_conf_path }}"
+    owner: "{{ redis_svc_user }}"
+    group: "{{ redis_svc_group }}"
+    mode: 0644
+  when: redis_type == "redis-sentinel"
   notify: restart redis

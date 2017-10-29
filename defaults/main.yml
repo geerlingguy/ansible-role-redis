@@ -2,6 +2,9 @@
 # Used for RHEL/CentOS/Fedora only. Allows the use of different repos.
 redis_enablerepo: epel
 
+# Type of config setup - redis-server or redis-sentinel
+redis_type: redis-server
+
 # Allow for updating package
 redis_package_state: present
 
@@ -74,3 +77,12 @@ redis_svc_group: redis
 vm_overcommit_mem: True
 somaxconn_match: True
 disable_transparent_hugepage: True
+
+# Redis Sentinel
+redis_sentinel_enable: False
+
+redis_sentinel:
+  - master:
+    - { name: master1, ip: , port: 6379, quorum: 2}
+    - params:
+      - { key: , value: }

@@ -1,0 +1,36 @@
+# {{ ansible_managed }}
+
+{% if redis_daemonize %}
+daemonize yes
+pidfile {{ redis_pidfile }}
+{% endif %}
+
+port {{ redis_port }}
+bind {{ redis_bind_interface }}
+
+{% if redis_unixsocket %}
+unixsocket {{ redis_unixsocket }}
+{% endif %}
+
+timeout {{ redis_timeout }}
+
+loglevel {{ redis_loglevel }}
+logfile {{ redis_logfile }}
+
+{% if redis_requirepass %}
+requirepass {{ redis_requirepass }}
+{% endif %}
+
+# To enable logging to the system logger, just set 'syslog-enabled' to yes,
+# and optionally update the other syslog parameters to suit your needs.
+# syslog-enabled no
+# syslog-ident redis
+# syslog-facility local0
+
+
+{% for master_conf in redis_sentinel %}
+sentinel monitor {{ master_conf['name'] }} {{ master_conf['ip'] }} {{ master_conf['port'] }} {{ master_conf['quorum'] }} 
+{% for key_pair in master_conf['params'] %}
+sentinel {{ key_pair['key'] }} {{ master_conf['name'] }} {{ key_pair['value'] }}
+{% endfor %}
+{% endfor %}
