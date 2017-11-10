@@ -29,3 +29,10 @@
     enabled: yes
     state: started
   when: disabled_thp is defined and disabled_thp | changed
+
+- name: Update Redis ulimit
+  template: 
+    src: limits.d/redis.conf.j2
+    dest: /etc/security/limits.d/redis.conf
+  handler: restart redis
+

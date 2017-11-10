@@ -77,6 +77,7 @@ redis_svc_group: redis
 vm_overcommit_mem: True
 somaxconn_match: True
 disable_transparent_hugepage: True
+redis_ulimit: 65535
 
 # Redis Sentinel
 redis_sentinel_enable: False
