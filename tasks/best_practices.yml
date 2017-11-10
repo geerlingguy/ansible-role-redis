@@ -41,3 +41,13 @@
     limit_item: nofile
     limit_type: "-"
     value: "{{ redis_ulimit }}"
+
+- name: Update PAM modules to ensure limits are set
+  pamd:
+    name: "{{ item }}"
+    type: session
+    control: required
+    module_type: pam_limits.so
+  with_items:
+    - sudo
+    
