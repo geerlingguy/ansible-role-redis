@@ -3,6 +3,7 @@ Description=Redis persistent key-value database
 After=network.target
 
 [Service]
+LimitNOFILE={{ redis_ulimit }}
 Type=notify
 ExecStart=/usr/bin/{{ redis_type }} {{ redis_conf_path }} --supervised systemd
 ExecStop=/usr/libexec/redis-shutdown {{ redis_daemon }}
