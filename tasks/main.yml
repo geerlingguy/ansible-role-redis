@@ -17,6 +17,21 @@
 - include: setup-Archlinux.yml
   when: ansible_os_family == 'Archlinux'
 
+- name: Include lograte config file
+  template: 
+    src: logrotate.conf.j2
+    dest: /etc/logrotate.d/redis
+    mode: 0644
+    owner: "{{ redis_svc_user }}"
+    group: "{{ redis_svc_group }}"
+
+- name: Add crontab for logrotate
+  cron:
+    name: Redis daily logrotate
+    user: "{{ redis_svc_user }}"
+    special_time: daily
+    job: logrotate /etc/logrotate.d/redis
+
 - include: best_practices.yml
 
 - name: Ensure Redis is running and enabled on boot.
