@@ -34,5 +34,4 @@
   template: 
     src: limits.d/redis.conf.j2
     dest: /etc/security/limits.d/redis.conf
-  handler: restart redis
 
