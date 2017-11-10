@@ -1,4 +1,4 @@
-{{ redis_logfile }} {
+{{ redis_logfile | dirname }}/*.log {
        daily
        rotate 10
        copytruncate
