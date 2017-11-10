@@ -50,4 +50,4 @@
     module_type: pam_limits.so
   with_items:
     - sudo
-    
+    - login
