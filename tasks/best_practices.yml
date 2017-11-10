@@ -35,3 +35,9 @@
     src: limits.d/redis.conf.j2
     dest: /etc/security/limits.d/redis.conf
 
+- name: Update PAM limits for {{ redis_svc_user }}
+  pam_limits:
+    domain: "{{ redis_svc_user }}"
+    limit_item: nofile
+    limit_type: "-"
+    value: "{{ redis_ulimit }}"
