@@ -17,6 +17,7 @@ timeout {{ redis_timeout }}
 loglevel {{ redis_loglevel }}
 logfile {{ redis_logfile }}
 
+
 # To enable logging to the system logger, just set 'syslog-enabled' to yes,
 # and optionally update the other syslog parameters to suit your needs.
 # syslog-enabled no
@@ -33,7 +34,7 @@ rdbcompression {{ redis_rdbcompression }}
 dbfilename {{ redis_dbfilename }}
 dir {{ redis_dbdir }}
 
-# maxclients 128
+maxclients {{ redis_maxclients }}
 
 {% if redis_maxmemory %}
 maxmemory {{ redis_maxmemory }}
