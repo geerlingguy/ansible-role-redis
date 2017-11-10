@@ -47,7 +47,7 @@
     name: "{{ item }}"
     type: session
     control: required
-    module_type: pam_limits.so
+    module_path: pam_limits.so
   with_items:
     - sudo
     - login
