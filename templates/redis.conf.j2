@@ -1,7 +1,10 @@
 # {{ ansible_managed }}
 
+{% if redis_daemonize %}
 daemonize yes
-pidfile /var/run/redis/{{ redis_daemon }}.pid
+pidfile {{ redis_pidfile }}
+{% endif %}
+
 port {{ redis_port }}
 bind {{ redis_bind_interface }}
 
@@ -13,6 +16,7 @@ timeout {{ redis_timeout }}
 
 loglevel {{ redis_loglevel }}
 logfile {{ redis_logfile }}
+
 
 # To enable logging to the system logger, just set 'syslog-enabled' to yes,
 # and optionally update the other syslog parameters to suit your needs.
@@ -30,7 +34,7 @@ rdbcompression {{ redis_rdbcompression }}
 dbfilename {{ redis_dbfilename }}
 dir {{ redis_dbdir }}
 
-# maxclients 128
+maxclients {{ redis_maxclients }}
 
 {% if redis_maxmemory %}
 maxmemory {{ redis_maxmemory }}
@@ -53,3 +57,14 @@ requirepass {{ redis_requirepass }}
 {% for redis_disabled_command in redis_disabled_commands %}
 rename-command {{ redis_disabled_command }} ""
 {% endfor %}
+
+{% if redis_cluster %}
+cluster-enabled yes
+{% endif %}
+
+{% if redis_slaveof %}
+slaveof {{ redis_slaveof }}
+{% if redis_requirepass %}
+masterauth {{ redis_requirepass }}
+{% endif %}
+{% endif %}

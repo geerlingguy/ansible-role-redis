@@ -1,0 +1,17 @@
+[Unit]
+Description=Redis persistent key-value database
+After=network.target
+
+[Service]
+LimitNOFILE={{ redis_ulimit }}
+Type=notify
+ExecStart=/usr/bin/{{ redis_type }} {{ redis_conf_path }} --supervised systemd
+ExecStop=/usr/libexec/redis-shutdown {{ redis_daemon }}
+User={{ redis_svc_user }}
+Group={{ redis_svc_group }}
+RuntimeDirectory={{ redis_dbdir }}
+RuntimeDirectoryMode=0755
+
+[Install]
+WantedBy=multi-user.target
+

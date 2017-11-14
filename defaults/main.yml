@@ -2,13 +2,24 @@
 # Used for RHEL/CentOS/Fedora only. Allows the use of different repos.
 redis_enablerepo: epel
 
+# Type of config setup - redis-server or redis-sentinel
+redis_type: redis-server
+
+# Allow for updating package
+redis_package_state: present
+
 redis_port: 6379
 redis_bind_interface: 127.0.0.1
 redis_unixsocket: ''
 redis_timeout: 300
+redis_daemonize: True
+redis_pidfile: "/var/run/redis/{{ redis_daemon }}.pid"
 
 redis_loglevel: "notice"
-redis_logfile: /var/log/redis/redis-server.log
+redis_logfile: "/var/log/redis/{{ redis_daemon }}.log"
+
+# This should match /proc/sys/net/core/somaxconn
+redis_tcp_backlog: 511
 
 redis_databases: 16
 
@@ -51,3 +62,29 @@ redis_disabled_commands: []
 #  - SREM
 #  - RENAME
 #  - DEBUG
+
+redis_cluster: False
+
+# Allow for adding a Redis slave within the config
+redis_slaveof: ''
+
+# Redis Service settings
+redis_daemon: redis
+redis_svc_user: redis
+redis_svc_group: redis
+
+# Best Practices - 
+vm_overcommit_mem: True
+somaxconn_match: True
+disable_transparent_hugepage: True
+redis_maxclients: 10000
+redis_ulimit: 10000
+
+# Redis Sentinel
+redis_sentinel_enable: False
+
+redis_sentinel:
+  - master:
+    - { name: master1, ip: , port: 6379, quorum: 2}
+    - params:
+      - { key: , value: }

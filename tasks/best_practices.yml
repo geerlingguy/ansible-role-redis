@@ -1,0 +1,31 @@
+---
+- name: Set vm memory overcommit
+  sysctl:
+    name: vm.overcommit_memory
+    value: 1
+    state: present
+  when: vm_overcommit_mem
+
+- name: Set somaxconn to higher value
+  sysctl:
+    name: net.core.somaxconn
+    value: "{{ redis_tcp_backlog }}"
+    state: present
+  when: somaxconn_match
+
+- name: Disable transparent hugepages
+  template:
+    src: transparent_hugepage/disable_initd.j2
+    dest: "/etc/init.d/{{ redis_daemon }}_disable_thp"
+    mode: 0755
+  register: disabled_thp
+  when: disable_transparent_hugepage
+  #notify: reboot server
+
+- name: Enable service for transparent hugepages
+  systemd:
+    daemon_reload: yes
+    name: "{{ redis_daemon }}_disable_thp"
+    enabled: yes
+    state: started
+  when: disabled_thp is defined and disabled_thp | changed

@@ -34,6 +34,10 @@ Close a connection after a client is idle `N` seconds. Set to `0` to disable tim
 
 Log level and log location (valid levels are `debug`, `verbose`, `notice`, and `warning`).
 
+    redis_tcp_backlog: 511
+
+Increasing the tcp backlog allows for high-request environments to have a larger backlog for slow-request clients. The OS may truncate this to the default setting for somaxconn.  See "best practices" below for how this is being handled, if desired.
+
     redis_databases: 16
 
 The number of Redis databases.
@@ -77,12 +81,6 @@ Valid values are `always` (slower, safest), `everysec` (happy medium), or `no` (
 
 Add extra include file paths to this list to include more/localized Redis configuration.
 
-The redis package name for installation via the system package manager. Defaults to `redis-server` on Debian and `redis` on RHEL.
-
-    redis_package_name: "redis-server"
-
-(Default for RHEL shown) The redis package name for installation via the system package manager. Defaults to `redis-server` on Debian and `redis` on RHEL.
-
     redis_requirepass: ""
 
 Set a password to require authentication to Redis. You can generate a strong password using `echo "my_password_here" | sha256sum`.
@@ -99,6 +97,33 @@ For extra security, you can disable certain Redis commands (this is especially i
       - DEL
       - CONFIG
       - SHUTDOWN
+
+Redis systemd overrides below.  This allows for more flexibility in installing more than one instance, such as a master/slave configuration on a single server.
+
+    redis_daemon: "redis"
+
+The redis daemon name name used for creating the config file and mapping to the service.  Changing this for multiple instances will allow for different config files to be created, mapping to the systemd service file for management.
+
+    redis_svc_user: "redis"
+    redis_svc_group: "redis"
+
+The user and group that will own the service while it is running.
+
+### Best Practices
+Some default configurable best practices per redis.io that can be found here [Redis Administration](https://redis.io/topics/admin)
+
+    vm_overcommit_mem: True
+
+The kernel will not overcommit memory which allows for more flexibility for memory but also increases risk of memory overload. Consider maxmemory settings and system swap as well.
+
+    somaxconn_match: True
+
+Match the value of the sysctl flag 'net.core.somaxconn' to the value of redis_tcp_backlog.  These should at least match or the system will truncate the value.
+
+    disable_transparent_hugepage: True
+
+Transparent hugepages are often enabled by default.  Redis will warn of this if enabled.  Enabling them may cause delays allocating memory during runtime, so it is recommended to disable them by default.
+
 
 ## Dependencies
 

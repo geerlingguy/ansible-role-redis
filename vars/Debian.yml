@@ -1,4 +1,17 @@
 ---
 __redis_package: redis-server
-redis_daemon: redis-server
-redis_conf_path: /etc/redis/redis.conf
+redis_conf_path: /etc/redis/{{ redis_daemon }}.conf
+
+# Service vars
+redis_svc_path: /lib/systemd/system/
+redis_svc_file: "{{ redis_daemon }}.service"
+
+read_write_dirs:
+  - "{{ redis_pidfile | dirname }}"
+  - "{{ redis_logfile | dirname }}"
+  - "{{ redis_dbdir }}"
+  - /etc/redis/{{ redis_daemon }}.pre-up.d
+  - /etc/redis/{{ redis_daemon }}.post-up.d
+  - /etc/redis/{{ redis_daemon }}.pre-down.d
+  - /etc/redis/{{ redis_daemon }}.post-down.d
+

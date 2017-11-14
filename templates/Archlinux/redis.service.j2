@@ -1,0 +1,23 @@
+[Unit]
+Description=Advanced key-value store
+After=network.target
+
+[Service]
+LimitNOFILE={{ redis_ulimit }}
+Type=simple
+User={{ redis_svc_user }}
+Group={{ redis_svc_group }}
+ExecStart=/usr/bin/{{ redis_type }} /etc/{{ redis_daemon }}.conf
+ExecStop=/usr/bin/redis-cli shutdown
+CapabilityBoundingSet=
+PrivateTmp=true
+PrivateDevices=true
+ProtectSystem=full
+ProtectHome=true
+NoNewPrivileges=true
+RuntimeDirectory={{ redis_dbdir }}
+RuntimeDirectoryMode=755
+
+[Install]
+WantedBy=multi-user.target
+

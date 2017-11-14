@@ -2,5 +2,55 @@
 - name: Ensure Redis is installed.
   package:
     name: "{{ redis_package }}"
-    state: present
+    state: "{{ redis_package_state }}"
     enablerepo: "{{ redis_enablerepo }}"
+  notify: restart redis
+
+- name: Add service file
+  template:
+    src: "{{ ansible_os_family }}/redis.service.j2"
+    dest: "{{ redis_svc_path }}/{{ redis_svc_file }}"
+    owner: "{{ redis_svc_user }}"
+    group: "{{ redis_svc_group }}"
+    mode: 0644
+  register: redis_service_file
+
+# Do this immediately, not via handler, to avoid any downstream conflicts
+- name: Reload redis service
+  systemd:
+    state: stopped
+    daemon_reload: yes
+    name: "{{ redis_daemon }}"
+  when: redis_service_file | changed
+
+# Setup/install tasks.
+- name: Create default directories
+  file:
+    path: "{{ item }}"
+    owner: "{{ redis_svc_user }}"
+    group: "{{ redis_svc_group }}"
+    state: directory
+    mode: 0755
+    recurse: yes
+  with_items:
+    - "{{ read_write_dirs }}"
+
+- name: Ensure Redis is configured.
+  template:
+    src: redis.conf.j2
+    dest: "{{ redis_conf_path }}"
+    owner: "{{ redis_svc_user }}"
+    group: "{{ redis_svc_group }}"
+    mode: 0644
+  when: redis_type == "redis-server"
+  notify: restart redis
+
+- name: Ensure Redis Sentinel is configured.
+  template:
+    src: redis-sentinel.conf.j2
+    dest: "{{ redis_conf_path }}"
+    owner: "{{ redis_svc_user }}"
+    group: "{{ redis_svc_group }}"
+    mode: 0644
+  when: redis_type == "redis-sentinel"
+  notify: restart redis

@@ -2,4 +2,41 @@
 - name: Ensure Redis is installed.
   pacman:
     name: "{{ redis_package }}"
-    state: present
+    state: "{{ redis_package_state }}"
+
+- name: Add service file
+  template:
+    src: "{{ ansible_os_family }}/redis.service.j2"
+    dest: "{{ redis_svc_path }}/{{ redis_svc_file }}"
+    owner: "{{ redis_svc_user }}"
+    group: "{{ redis_svc_group }}"
+    mode: 0644
+  register: redis_service_file
+
+# Do this immediately, not via handler, to avoid any downstream conflicts
+- name: Reload redis service
+  systemd:
+    state: started
+    daemon_reload: yes
+    name: "{{ redis_daemon }}"
+  when: redis_service_file | changed
+
+# Setup/install tasks.
+- name: Create default directories
+  file:
+    path: "{{ item }}"
+    owner: "{{ redis_svc_user }}"
+    group: "{{ redis_svc_group }}"
+    state: directory
+    mode: 0755
+  with_items:
+    - "{{ read_write_dirs }}"
+
+- name: Ensure Redis is configured.
+  template:
+    src: redis.conf.j2
+    dest: "{{ redis_conf_path }}"
+    owner: "{{ redis_svc_user }}"
+    group: "{{ redis_svc_group }}"
+    mode: 0644
+  notify: restart redis

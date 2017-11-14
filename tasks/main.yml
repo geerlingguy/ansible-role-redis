@@ -8,7 +8,6 @@
     redis_package: "{{ __redis_package }}"
   when: redis_package is not defined
 
-# Setup/install tasks.
 - include: setup-RedHat.yml
   when: ansible_os_family == 'RedHat'
 
@@ -18,12 +17,7 @@
 - include: setup-Archlinux.yml
   when: ansible_os_family == 'Archlinux'
 
-- name: Ensure Redis is configured.
-  template:
-    src: redis.conf.j2
-    dest: "{{ redis_conf_path }}"
-    mode: 0644
-  notify: restart redis
+- include: best_practices.yml
 
 - name: Ensure Redis is running and enabled on boot.
   service: "name={{ redis_daemon }} state=started enabled=yes"

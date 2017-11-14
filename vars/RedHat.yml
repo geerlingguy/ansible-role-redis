@@ -1,4 +1,13 @@
 ---
 __redis_package: redis
-redis_daemon: redis
-redis_conf_path: /etc/redis.conf
+redis_conf_path: /etc/{{ redis_daemon }}.conf
+
+# Service vars
+redis_svc_path: /usr/lib/systemd/system/
+redis_svc_file: "{{ redis_daemon }}.service"
+
+read_write_dirs:
+  - /var/lib/redis
+  - "{{ redis_pidfile | dirname }}"
+  - "{{ redis_logfile | dirname }}"
+  - "{{ redis_dbdir }}"
