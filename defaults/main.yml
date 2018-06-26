@@ -10,6 +10,10 @@ redis_timeout: 300
 redis_loglevel: "notice"
 redis_logfile: /var/log/redis/redis-server.log
 
+redis_syslog_enabled: "no"
+redis_syslog_ident: redis
+redis_syslog_facility: local0
+
 redis_databases: 16
 
 # Set to an empty set to disable persistence (saving the DB to disk).
