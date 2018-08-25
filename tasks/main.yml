@@ -24,6 +24,15 @@
     dest: "{{ redis_conf_path }}"
     mode: 0644
   notify: restart redis
+  register: config
 
 - name: Ensure Redis is running and enabled on boot.
   service: "name={{ redis_daemon }} state=started enabled=yes"
+
+# Conditional restart below because of https://github.com/ansible/ansible/issues/15476
+# Restarting this service needs to be role-scoped, to make sure follow-up roles
+# get the expected machine state.
+- name: Ensure Redis restarts NOW if needed
+  become: yes
+  service: name=redis state=restarted enabled=yes
+  when: config.changed
