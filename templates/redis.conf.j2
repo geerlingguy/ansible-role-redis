@@ -53,3 +53,7 @@ requirepass {{ redis_requirepass }}
 {% for redis_disabled_command in redis_disabled_commands %}
 rename-command {{ redis_disabled_command }} ""
 {% endfor %}
+
+{% for redis_extra_config in redis_extra_configs %}
+{{ redis_extra_config }}
+{% endfor %}

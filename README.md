@@ -100,6 +100,12 @@ For extra security, you can disable certain Redis commands (this is especially i
       - CONFIG
       - SHUTDOWN
 
+Any additional configuration can be done using `redis_extra_configs: []`, for example:
+    
+    redis_extra_configs:
+      - "cluster-enabled yes"
+      - "slaveof 10.0.0.1 6379"
+
 ## Dependencies
 
 None.

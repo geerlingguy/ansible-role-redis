@@ -51,3 +51,8 @@ redis_disabled_commands: []
 #  - SREM
 #  - RENAME
 #  - DEBUG
+
+# Extra free-form lines to put in the config
+redis_extra_configs: []
+#  - "cluster-enabled yes"
+#  - "... etc ..."
