@@ -104,7 +104,6 @@ Any additional configuration can be done using `redis_extra_configs: []`, for ex
     
     redis_extra_configs:
       - "cluster-enabled yes"
-      - "slaveof 10.0.0.1 6379"
 
 ## Dependencies
 
