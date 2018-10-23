@@ -7,10 +7,8 @@ env:
     - ROLE_NAME: redis
   matrix:
     - MOLECULE_DISTRO: centos7
-      MOLECULE_DOCKER_COMMAND: /usr/lib/systemd/systemd
-    # - MOLECULE_DISTRO: fedora27
-    #   MOLECULE_DOCKER_COMMAND: /usr/lib/systemd/systemd
-    - MOLECULE_DISTRO: ubuntu1604
+    - MOLECULE_DISTRO: fedora27
+    - MOLECULE_DISTRO: ubuntu1804
 
 install:
   # Install test dependencies.
