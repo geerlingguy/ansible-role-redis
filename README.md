@@ -30,7 +30,8 @@ If set, Redis will also listen on a local Unix socket.
 Close a connection after a client is idle `N` seconds. Set to `0` to disable timeout.
 
     redis_loglevel: "notice"
-    redis_logfile: /var/log/redis/redis-server.log
+    redis_log_path: /var/log/redis
+    redis_log_filename: redis-server.log
 
 Log level and log location (valid levels are `debug`, `verbose`, `notice`, and `warning`).
 
@@ -86,6 +87,10 @@ The redis package name for installation via the system package manager. Defaults
     redis_requirepass: ""
 
 Set a password to require authentication to Redis. You can generate a strong password using `echo "my_password_here" | sha256sum`.
+
+    redis_protectsystem: true
+
+Redis-server can write to its own config file when in cluster mode so we permit writing there by default. If you are not using this feature, it is recommended that you replace the following lines with "ProtectSystem=full".
 
     redis_disabled_commands: []
 
