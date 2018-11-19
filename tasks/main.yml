@@ -34,7 +34,7 @@
   when: ansible_service_mgr == "systemd" and ansible_os_family == "Debian"
 
 - name: Ensure Redis is running and enabled on boot.
-  service: 
+  service:
     name: "{{ redis_daemon }}"
     state: started
     enabled: yes
