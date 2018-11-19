@@ -2,5 +2,5 @@
 - name: restart redis
   service: "name={{ redis_daemon }} state=restarted"
 - name: reload systemctl
-  systemd:
-    daemon_reload: yes
+  systemd: "daemon_reload=yes"
+
