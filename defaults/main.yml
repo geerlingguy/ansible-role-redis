@@ -2,6 +2,9 @@
 # Used for RHEL/CentOS/Fedora only. Allows the use of different repos.
 redis_enablerepo: epel
 
+# Path to redis.conf template
+redis_config_template: redis.conf.j2
+
 redis_port: 6379
 redis_bind_interface: 127.0.0.1
 redis_unixsocket: ''

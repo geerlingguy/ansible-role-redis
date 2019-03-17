@@ -16,6 +16,14 @@ On RedHat-based distributions, requires the EPEL repository (you can simply add 
 
 Available variables are listed below, along with default values (see `defaults/main.yml`):
 
+    redis_config_template: redis.conf.j2
+
+You can override this role's default template with your own, adding any additional customizations you need. To do this:
+
+  - Create a `templates` directory at the same level as your playbook.
+  - Create a `templates\myredis.conf.j2` file (just choose a different name from the default template).
+  - Set the variable like: `redis_config_template: myredis.conf.j2` (with the name of your custom template).
+
     redis_port: 6379
     redis_bind_interface: 127.0.0.1
 
