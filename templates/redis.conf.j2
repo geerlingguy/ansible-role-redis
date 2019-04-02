@@ -14,6 +14,8 @@ timeout {{ redis_timeout }}
 loglevel {{ redis_loglevel }}
 logfile {{ redis_logfile }}
 
+supervised systemd
+
 # To enable logging to the system logger, just set 'syslog-enabled' to yes,
 # and optionally update the other syslog parameters to suit your needs.
 # syslog-enabled no
