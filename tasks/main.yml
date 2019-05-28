@@ -22,7 +22,7 @@
   template:
     src: redis.conf.j2
     dest: "{{ redis_conf_path }}"
-    mode: 0644
+    mode: 0640
   notify: restart redis
 
 - name: Ensure Redis is running and enabled on boot.
