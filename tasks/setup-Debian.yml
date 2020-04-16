@@ -3,3 +3,4 @@
   apt:
     name: "{{ redis_package }}"
     state: present
+    update_cache: yes
