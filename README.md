@@ -100,6 +100,10 @@ For extra security, you can disable certain Redis commands (this is especially i
       - CONFIG
       - SHUTDOWN
 
+    redis_pid_path: /var/run/redis
+
+This variable is used to customize the folder where pid file is stored. Check you systemd configuration provided by your operating system to use the same.
+
 ## Dependencies
 
 None.
