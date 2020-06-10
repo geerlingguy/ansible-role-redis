@@ -18,7 +18,7 @@
   template:
     src: redis.conf.j2
     dest: "{{ redis_conf_path }}"
-    mode: 0640
+    mode: "{{ redis_conf_mode }}"
   notify: restart redis
 
 # Setup/install tasks.
