@@ -100,6 +100,22 @@ For extra security, you can disable certain Redis commands (this is especially i
       - CONFIG
       - SHUTDOWN
 
+Enable replication.
+
+    redis_replication: false
+
+A resolvable dns name or IP address of the primary redis instance.
+
+    redis_slaveof: false
+
+Replication can be further configured.
+
+    redis_slave_read_only: "yes"
+    redis_repl_backlog_size: 1mb
+    redis_slave_priority: 100
+    redis_min_slaves_to_write: 0
+    redis_min_slaves_max_lag: 10
+
 ## Dependencies
 
 None.
@@ -109,6 +125,25 @@ None.
     - hosts: all
       roles:
         - role: geerlingguy.redis
+
+Setup replication
+
+    - hosts: redis_primary
+      gather_facts: true
+      become: true
+      roles:
+        - role: geerlingguy.redis
+          redis_replication: true
+          redis_bind_interface: "{{ ansible_eth0.ipv4.address }}"
+
+    - hosts: redis_secondary
+      gather_facts: true
+      become: true
+      roles:
+        - role: geerlingguy.redis
+          redis_replication: true
+          redis_slaveof: "{{ hostvars[groups['redis_primary'][0]].ansible_eth0.ipv4.address }} {{ redis_port }}"
+          redis_bind_interface: "{{ ansible_eth0.ipv4.address }}"
 
 ## License
 

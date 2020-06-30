@@ -1,0 +1,33 @@
+---
+- name: Converge
+  hosts: all
+  become: true
+
+  tasks:
+    - name: Update apt cache.
+      apt: update_cache=true cache_valid_time=600
+      when: ansible_os_family == 'Debian'
+
+    - name: Clear out repo for Fedora.
+      set_fact:
+        redis_enablerepo: ""
+      when: ansible_distribution == 'Fedora'
+
+- name: Setup Primary
+  hosts: redis_primary
+  gather_facts: true
+  become: true
+  roles:
+    - role: geerlingguy.redis
+      redis_replication: true
+      redis_bind_interface: "{{ ansible_eth0.ipv4.address }}"
+
+- name: Setup Secondaries
+  hosts: redis_secondary
+  gather_facts: true
+  become: true
+  roles:
+    - role: geerlingguy.redis
+      redis_replication: true
+      redis_slaveof: "{{ hostvars[groups['redis_primary'][0]].ansible_eth0.ipv4.address }} {{ redis_port }}"
+      redis_bind_interface: "{{ ansible_eth0.ipv4.address }}"

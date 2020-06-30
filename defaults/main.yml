@@ -51,3 +51,13 @@ redis_disabled_commands: []
 #  - SREM
 #  - RENAME
 #  - DEBUG
+
+# Replication
+
+redis_replication: false
+redis_slaveof: false
+redis_slave_read_only: "yes"
+redis_repl_backlog_size: 1m
+redis_slave_priority: 100
+redis_min_slaves_to_write: 0
+redis_min_slaves_max_lag: 10

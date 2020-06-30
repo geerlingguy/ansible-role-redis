@@ -1,0 +1,35 @@
+---
+defaults: &defaults
+  image: "geerlingguy/docker-${MOLECULE_DISTRO:-ubuntu1804}-ansible:latest"
+  command: ${MOLECULE_DOCKER_COMMAND:-""}
+  volumes:
+    - /sys/fs/cgroup:/sys/fs/cgroup:ro
+  privileged: true
+  pre_build_image: true
+
+dependency:
+  name: galaxy
+driver:
+  name: docker
+lint: |
+  set -e
+  yamllint .
+  ansible-lint
+platforms:
+  - <<: *defaults
+    name: instance-primary
+    groups:
+      - redis_primary
+  - <<: *defaults
+    name: instance-secondary-1
+    groups:
+      - redis_secondary
+  - <<: *defaults
+    name: instance-secondary-2
+    groups:
+      - redis_secondary
+
+provisioner:
+  name: ansible
+  playbooks:
+    converge: ${MOLECULE_PLAYBOOK:-converge.yml}
