@@ -18,6 +18,8 @@ redis_save:
   - 300 10
   - 60 10000
 
+redis_stop_writes_on_bgsave_error: "yes"
+
 redis_rdbcompression: "yes"
 redis_dbfilename: dump.rdb
 redis_dbdir: /var/lib/redis

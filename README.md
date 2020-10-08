@@ -46,6 +46,10 @@ The number of Redis databases.
 
 Snapshotting configuration; setting values in this list will save the database to disk if the given number of seconds (e.g. `900`) and the given number of write operations (e.g. `1`) have occurred.
 
+    stop-writes-on-bgsave-error: "yes"
+
+By default Redis will stop accepting writes if RDB snapshots are enabled (at least one save point) and the latest background save failed. If you have setup monitoring of the Redis server and persistence, you may want to disable (set `no`) this feature so that Redis will continue to work as usual even if there are problems with disk, permissions, and so forth.
+
     redis_rdbcompression: "yes"
     redis_dbfilename: dump.rdb
     redis_dbdir: /var/lib/redis

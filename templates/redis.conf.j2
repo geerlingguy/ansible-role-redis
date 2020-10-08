@@ -25,6 +25,9 @@ databases {{ redis_databases }}
 {% for save in redis_save %}
 save {{ save }}
 {% endfor %}
+{% if redis_stop_writes_on_bgsave_error %}
+stop-writes-on-bgsave-error {{ redis_stop_writes_on_bgsave_error }}
+{% endif %}
 
 rdbcompression {{ redis_rdbcompression }}
 dbfilename {{ redis_dbfilename }}
