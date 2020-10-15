@@ -3,3 +3,10 @@
   apt:
     name: "{{ redis_package }}"
     state: present
+
+- name: Create systemd service unit
+  notify:
+    - restart redis
+  template:
+    src: redis-server.service.j2
+    dest: /etc/systemd/system/redis-server.service

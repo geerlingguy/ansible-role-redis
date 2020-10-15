@@ -30,7 +30,13 @@ rdbcompression {{ redis_rdbcompression }}
 dbfilename {{ redis_dbfilename }}
 dir {{ redis_dbdir }}
 
-# maxclients 128
+{% if redis_maxclients %}
+maxclients {{ redis_maxclients }}
+{% endif %}
+
+{% if redis_tcp_backlog %}
+tcp-backlog {{ redis_tcp_backlog }}
+{% endif %}
 
 {% if redis_maxmemory %}
 maxmemory {{ redis_maxmemory }}
