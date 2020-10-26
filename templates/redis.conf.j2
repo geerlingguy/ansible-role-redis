@@ -53,3 +53,7 @@ requirepass {{ redis_requirepass }}
 {% for redis_disabled_command in redis_disabled_commands %}
 rename-command {{ redis_disabled_command }} ""
 {% endfor %}
+
+{% if redis_notify_keyspace_events %}
+notify-keyspace-events {{ redis_notify_keyspace_events }}
+{% endif %}

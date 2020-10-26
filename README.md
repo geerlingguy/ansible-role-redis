@@ -100,6 +100,10 @@ For extra security, you can disable certain Redis commands (this is especially i
       - CONFIG
       - SHUTDOWN
 
+You can enable keyspace notifications by setting the `notify-keyspace-events` parameter. See [Redis Keyspace Notifications](https://redis.io/topics/notifications).
+
+    redis_notify_keyspace_events: "KEA"
+
 ## Dependencies
 
 None.
