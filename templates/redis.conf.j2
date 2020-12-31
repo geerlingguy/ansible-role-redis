@@ -8,6 +8,9 @@ bind {{ redis_bind_interface }}
 {% if redis_unixsocket %}
 unixsocket {{ redis_unixsocket }}
 {% endif %}
+{% if redis_unixsocketperm %}
+unixsocketperm {{ redis_unixsocketperm }}
+{% endif %}
 
 timeout {{ redis_timeout }}
 

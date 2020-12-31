@@ -23,7 +23,11 @@ Port and interface on which Redis will listen. Set the interface to `0.0.0.0` to
 
     redis_unixsocket: ''
 
-If set, Redis will also listen on a local Unix socket.
+If set, Redis will also listen on this local Unix socket.
+
+    redis_unixsocketperm: ''
+
+If set, Unix permission of the socket file.
 
     redis_timeout: 300
 
