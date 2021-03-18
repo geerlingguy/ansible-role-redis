@@ -38,6 +38,8 @@ maxmemory-policy {{ redis_maxmemory_policy }}
 maxmemory-samples {{ redis_maxmemory_samples }}
 {% endif %}
 
+activedefrag {{ redis_activedefrag }}
+
 appendonly {{ redis_appendonly }}
 appendfsync {{ redis_appendfsync }}
 no-appendfsync-on-rewrite no
