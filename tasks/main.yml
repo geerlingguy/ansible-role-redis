@@ -21,6 +21,29 @@
     mode: "{{ redis_conf_mode }}"
   notify: restart redis
 
+-   name: Install sysfsutils
+    apt:
+      name: sysfsutils
+
+-   name: Disable THP for Redis
+    lineinfile:
+      dest: /etc/sysfs.conf
+      line: 'kernel/mm/transparent_hugepage/enabled = never'
+
+-   name: Increase TCP backlog for Redis
+    sysctl:
+      name: net.core.somaxconn
+      value: 4096
+      state: present
+      sysctl_set: true
+            
+-  name: Set overcommit memory sysctl for Redis
+   sysctl:
+     name: vm.overcommit_memory
+     value: 1
+     state: present
+     sysctl_set: true
+            
 # Setup/install tasks.
 - include_tasks: setup-RedHat.yml
   when: ansible_os_family == 'RedHat'
