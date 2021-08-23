@@ -31,5 +31,27 @@
 - include_tasks: setup-Archlinux.yml
   when: ansible_os_family == 'Archlinux'
 
+- name: Check if log file exists
+  stat:
+    path: "{{redis_logfile}}"
+  register: redis_logfile_stat
+
+- name: Ensure log file directory exists and has correct owner
+  file:
+    path: "{{redis_logfile|dirname}}"
+    state: directory
+    owner: redis
+    group: redis
+    mode: 0750
+
+- name: Ensure log file exists and is writable by Redis Server
+  file:
+    path: "{{redis_logfile}}"
+    state: touch
+    owner: redis
+    group: redis
+    mode: 0640
+  when: redis_logfile_stat.stat.exists == False
+
 - name: Ensure Redis is running and enabled on boot.
   service: "name={{ redis_daemon }} state=started enabled=yes"
