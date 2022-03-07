@@ -41,9 +41,10 @@ jobs:
     strategy:
       matrix:
         distro:
+          - rockylinux8
           - centos7
-          - fedora32
-          - ubuntu1804
+          - fedora35
+          - ubuntu2004
 
     steps:
       - name: Check out the codebase.
