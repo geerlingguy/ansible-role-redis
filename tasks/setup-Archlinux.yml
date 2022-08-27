@@ -1,6 +1,5 @@
 ---
 - name: Ensure Redis is installed.
-  package:
+  pacman:
     name: "{{ redis_package }}"
     state: present
-    enablerepo: "{{ redis_enablerepo | default(omit, true) }}"
