@@ -1,6 +1,7 @@
 ---
 # Used for RHEL/CentOS/Fedora only. Allows the use of different repos.
 redis_enablerepo: epel
+redis_enablerepo_deb: false
 
 ## set to false, if you don't want this role to manage redis configuration and enable service
 ## for example, if set in another role/using supervisor...

@@ -1,5 +1,19 @@
 ---
-- name: Ensure Redis is installed.
+
+- name: Redis repository
+  block:
+    - name: Import Redis gpg key
+      ansible.builtin.get_url:
+        url: https://packages.redis.io/gpg
+        dest: /usr/share/keyrings/redis-archive-keyring.gpg
+    - name: Enable Redis official repository
+      ansible.builtin.apt_repository:
+        repo: "deb [signed-by=/usr/share/keyrings/redis-archive-keyring.gpg] https://packages.redis.io/deb $(lsb_release -cs) main"
+        filename: /etc/apt/sources.list.d/redis.list
+        state: present
+  when: redis_enablerepo_deb|bool
+
+ name: Ensure Redis is installed.
   apt:
     name: "{{ redis_package }}"
     state: present
