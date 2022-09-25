@@ -43,7 +43,6 @@ jobs:
         distro:
           - rockylinux8
           - centos7
-          - fedora35
           - ubuntu2004
 
     steps:
