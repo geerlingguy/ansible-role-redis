@@ -51,3 +51,5 @@ redis_disabled_commands: []
 #  - SREM
 #  - RENAME
 #  - DEBUG
+
+redis_extra_config: ""
