@@ -100,6 +100,10 @@ For extra security, you can disable certain Redis commands (this is especially i
       - CONFIG
       - SHUTDOWN
 
+Stop write actions if Redis can't take RDB snapshots. Disabling this default setting is especially important if you're using Redis as a FIFO puffer (e.g. for Logmanagement). Redis can reach a level of filling that will prohibit even removing data thus leading to a state where you can't write nor delete from it and you're stuck. Remember to put monitoring in place if you disable this. Possible values: `yes` or `no`.
+
+    redis_stop_writes_on_bgsave_error: yes
+
 ## Dependencies
 
 None.
