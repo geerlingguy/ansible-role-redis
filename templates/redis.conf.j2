@@ -22,9 +22,13 @@ logfile {{ redis_logfile }}
 
 databases {{ redis_databases }}
 
+{% if redis_save | length > 0 %}
 {% for save in redis_save %}
 save {{ save }}
 {% endfor %}
+{% else %}
+save ""
+{% endif %}
 
 rdbcompression {{ redis_rdbcompression }}
 dbfilename {{ redis_dbfilename }}
