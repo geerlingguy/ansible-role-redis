@@ -1,4 +1,5 @@
 ---
 __redis_package: redis
 redis_daemon: redis
+redis_pidfile: /var/run/redis/{{ redis_daemon }}.pid
 redis_conf_path: /etc/redis.conf

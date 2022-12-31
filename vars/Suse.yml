@@ -1,0 +1,8 @@
+---
+__redis_package: redis
+redis_instancename: default
+redis_daemon: "redis@{{ redis_instancename }}"
+redis_pidfile: "/var/run/redis/{{ redis_instancename }}.pid"
+# redis_suse_logfile: "/var/log/redis/{{ redis_instancename }}.log"
+redis_conf_path: "/etc/redis/{{ redis_instancename }}.conf"
+redis_conf_mode: 0640

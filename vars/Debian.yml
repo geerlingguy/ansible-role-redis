@@ -1,5 +1,6 @@
 ---
 __redis_package: redis-server
 redis_daemon: redis-server
+redis_pidfile: /var/run/redis/{{ redis_daemon }}.pid
 redis_conf_path: /etc/redis/redis.conf
 redis_conf_mode: 0640

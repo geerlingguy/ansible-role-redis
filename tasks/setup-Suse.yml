@@ -1,0 +1,15 @@
+---
+- name: Ensure Redis is installed.
+  package:
+    name: "{{ redis_package }}"
+    state: present
+
+- name: Ensure Redis configuration has the rights as advertised by the SuSE configuration.
+  ansible.builtin.file:
+    path: "{{ redis_conf_path }}"
+    mode: "{{ redis_conf_mode }}"
+    owner: root
+    group: redis
+
+- name: execute installation of data folder as recommended by SuSE
+  ansible.builtin.command: "install -d -o redis -g redis -m 0750 /var/lib/redis/{{ redis_instancename }}/"
