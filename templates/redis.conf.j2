@@ -1,4 +1,4 @@
-# {{ ansible_managed }}
+{{ ansible_managed | comment}}
 
 daemonize yes
 pidfile /var/run/redis/{{ redis_daemon }}.pid
