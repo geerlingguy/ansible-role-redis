@@ -12,7 +12,7 @@
   file:
     path: "{{ redis_conf_path | dirname }}"
     state: directory
-    mode: 0755
+    mode: '0755'
 
 - name: Ensure Redis is configured.
   template:
