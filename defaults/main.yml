@@ -53,3 +53,5 @@ redis_disabled_commands: []
 #  - DEBUG
 
 redis_extra_config: ""
+
+redis_acl_file: ""

@@ -42,10 +42,6 @@ appendonly {{ redis_appendonly }}
 appendfsync {{ redis_appendfsync }}
 no-appendfsync-on-rewrite no
 
-{% for include in redis_includes %}
-include {{ include }}
-{% endfor %}
-
 {% if redis_requirepass %}
 requirepass {{ redis_requirepass }}
 {% endif %}
@@ -55,3 +51,11 @@ rename-command {{ redis_disabled_command }} ""
 {% endfor %}
 
 {{ redis_extra_config }}
+
+{% if redis_acl_file %}
+aclfile {{ redis_acl_file }}
+{% endif %}
+
+{% for include in redis_includes %}
+include {{ include }}
+{% endfor %}
