@@ -26,8 +26,6 @@
   ansible.builtin.file:
     path: "{{ redis_acl_file }}"
     state: touch
-    owner: redis
-    group: redis
     mode: "{{ redis_conf_mode }}"
   when: redis_acl_file != ""
 
