@@ -4,10 +4,10 @@ redis_enablerepo: epel
 
 redis_port: 6379
 redis_bind_interface: 127.0.0.1
-redis_unixsocket: ''
+redis_unixsocket: ""
 redis_timeout: 300
 
-redis_loglevel: "notice"
+redis_loglevel: notice
 redis_logfile: /var/log/redis/redis-server.log
 
 redis_databases: 16
@@ -23,15 +23,14 @@ redis_dbfilename: dump.rdb
 redis_dbdir: /var/lib/redis
 
 redis_maxmemory: 0
-redis_maxmemory_policy: "noeviction"
+redis_maxmemory_policy: noeviction
 redis_maxmemory_samples: 5
 
 redis_appendonly: "no"
-redis_appendfsync: "everysec"
+redis_appendfsync: everysec
 
 # Add extra include files for local configuration/overrides.
 redis_includes: []
-
 # Require authentication to Redis with a password.
 redis_requirepass: ""
 

@@ -1,5 +1,5 @@
 ---
 - name: Ensure Redis is installed.
-  pacman:
+  community.general.pacman:
     name: "{{ redis_package }}"
     state: present
