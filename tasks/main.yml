@@ -32,4 +32,7 @@
   when: ansible_os_family == 'Archlinux'
 
 - name: Ensure Redis is running and enabled on boot.
-  service: "name={{ redis_daemon }} state=started enabled=yes"
+  service:
+    name: "{{ redis_daemon }}"
+    state: started 
+    enabled: "{{ redis_enabled }}"

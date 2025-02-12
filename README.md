@@ -19,6 +19,12 @@ redis_enablerepo: epel
 Available variables are listed below, along with default values (see `defaults/main.yml`):
 
 ```yaml
+redis_enabled: true
+```
+
+If unset, Redis will not start at boot.
+
+```yaml
 redis_port: 6379
 redis_bind_interface: 127.0.0.1
 ```
