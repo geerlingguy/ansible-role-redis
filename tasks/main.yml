@@ -31,7 +31,7 @@
 - include_tasks: setup-Archlinux.yml
   when: ansible_os_family == 'Archlinux'
 
-- name: Ensure Redis is running and enabled on boot.
+- name: Ensure Redis is running.
   service:
     name: "{{ redis_daemon }}"
     state: started
