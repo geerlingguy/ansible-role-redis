@@ -108,7 +108,7 @@ Add extra include file paths to this list to include more/localized Redis config
 The redis package name for installation via the system package manager. Defaults to `redis-server` on Debian and `redis` on RHEL.
 
 ```yaml
-redis_package_name: "redis-server"
+redis_package: "redis-server"
 ```
 
 (Default for RHEL shown) The redis package name for installation via the system package manager. Defaults to `redis-server` on Debian and `redis` on RHEL.
