@@ -6,12 +6,12 @@
   pre_tasks:
     - name: Update apt cache.
       apt: update_cache=true cache_valid_time=600
-      when: ansible_os_family == 'Debian'
+      when: ansible_facts.os_family == 'Debian'
 
     - name: Clear out repo for Fedora.
       set_fact:
         redis_enablerepo: ""
-      when: ansible_distribution == 'Fedora'
+      when: ansible_facts.distribution == 'Fedora'
 
   roles:
     - role: geerlingguy.redis
